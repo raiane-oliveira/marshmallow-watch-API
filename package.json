@@ -1,0 +1,33 @@
+{
+  "name": "marshmallow-watch",
+  "version": "1.0.0",
+  "description": "Explore exclusive trailers, create personalized lists, and more with Marshmallow Watch. Transform your entertainment discovery experience today!",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsup src --out-dir build",
+    "start": "tsx build/server.cjs"
+  },
+  "engines": {
+    "node": "18.x"
+  },
+  "keywords": [],
+  "author": "Raiane Oliveira",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "9.7.0",
+    "@stylistic/eslint-plugin": "2.3.0",
+    "@swc/core": "1.6.13",
+    "@types/node": "^20.14.11",
+    "eslint": "9.7.0",
+    "globals": "15.8.0",
+    "tsup": "8.1.1",
+    "typescript": "^5.5.3",
+    "typescript-eslint": "7.16.1"
+  },
+  "dependencies": {
+    "fastify": "^4.28.1",
+    "tsx": "^4.16.2"
+  }
+}
