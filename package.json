@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "description": "Explore exclusive trailers, create personalized lists, and more with Marshmallow Watch. Transform your entertainment discovery experience today!",
   "main": "index.js",
-  "type": "module",
   "scripts": {
-    "dev": "tsx watch src/server.ts",
+    "dev": "tsx watch src/infra/server.ts",
     "build": "tsup src --out-dir build",
-    "start": "tsx build/server.cjs"
+    "start": "tsx build/server.cjs",
+    "test": "vitest run --dir ./src/domain/",
+    "test:watch": "vitest --dir ./src/domain/"
   },
   "engines": {
     "node": "18.x"
@@ -22,9 +23,12 @@
     "@types/node": "^20.14.11",
     "eslint": "9.7.0",
     "globals": "15.8.0",
+    "tsconfig-paths": "4.2.0",
     "tsup": "8.1.1",
     "typescript": "^5.5.3",
-    "typescript-eslint": "7.16.1"
+    "typescript-eslint": "7.16.1",
+    "vitest": "2.0.4",
+    "vitest-tsconfig-paths": "3.4.1"
   },
   "dependencies": {
     "fastify": "^4.28.1",
