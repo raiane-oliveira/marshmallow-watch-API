@@ -4,6 +4,16 @@ import { UsersRepository } from "@/domain/app/repositories/users-repository"
 export class InMemoryUsersRepository implements UsersRepository {
   items: User[] = []
 
+  async findById(id: string) {
+    const user = this.items.find(item => item.id.toString() === id)
+
+    if (!user) {
+      return null
+    }
+
+    return user
+  }
+
   async findByEmail(email: string) {
     const user = this.items.find(item => item.email === email)
 
@@ -16,5 +26,11 @@ export class InMemoryUsersRepository implements UsersRepository {
 
   async create(user: User) {
     this.items.push(user)
+  }
+
+  async update(user: User) {
+    const userIndex = this.items.findIndex(item => item.id.toString() === user.id.toString())
+
+    this.items[userIndex] = user
   }
 }
