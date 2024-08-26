@@ -1,7 +1,9 @@
-import { Knex, knex as setupKnex } from "knex"
+import knexInstance from "knex"
 import { env } from "../env"
 
-export const config: Knex.Config = {
+const { knex: setupKnex } = knexInstance
+
+export const config: knexInstance.Knex.Config = {
   client: "pg",
   connection: env.DATABASE_URL,
   debug: env.NODE_ENV === "dev",
