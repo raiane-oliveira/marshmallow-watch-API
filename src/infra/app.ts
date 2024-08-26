@@ -1,11 +1,25 @@
 import fastify from "fastify"
 import multipart from "@fastify/multipart"
+import fastifyJwt from "@fastify/jwt"
+import fastifyCookie from "@fastify/cookie"
+
 import { ZodError } from "zod"
 import { env } from "./env"
 import { userRoutes } from "./http/controllers/users/routes"
 
 export const app = fastify()
 
+app.register(fastifyCookie)
+app.register(fastifyJwt, {
+  secret: env.JWT_SECRET,
+  sign: {
+    expiresIn: "10m",
+  },
+  cookie: {
+    cookieName: "refresh_token",
+    signed: false,
+  },
+})
 app.register(multipart)
 
 app.register(userRoutes)
