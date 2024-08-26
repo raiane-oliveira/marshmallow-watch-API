@@ -1,5 +1,5 @@
-import { Uploader, UploadParams } from "@/domain/app/storage/uploader";
-import { randomUUID } from "crypto";
+import { Uploader, UploadParams } from "@/domain/app/storage/uploader"
+import { randomUUID } from "crypto"
 
 interface Upload {
   fileName: string
@@ -14,11 +14,11 @@ export class FakeUploader implements Uploader {
 
     this.uploads.push({
       fileName,
-      uploadId
+      uploadId,
     })
 
     return {
-      uploadId
+      uploadId,
     }
   }
 }

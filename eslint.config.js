@@ -4,7 +4,7 @@ import tseslint from "typescript-eslint"
 import stylistic from "@stylistic/eslint-plugin"
 
 export default [
-  { files: ["**/*.{js,mjs,cjs,ts}"] },
+  { files: ["**/*.{ts}"] },
   { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,

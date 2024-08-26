@@ -41,4 +41,3 @@ export const left = <L, R>(reason: L): Either<L, R> => {
 export const right = <L, R>(result: R): Either<L, R> => {
   return new Right(result)
 }
-

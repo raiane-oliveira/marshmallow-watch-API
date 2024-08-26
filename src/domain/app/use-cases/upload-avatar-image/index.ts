@@ -19,7 +19,7 @@ type UploadAvatarImageResponse = Either<
   }
 >
 
-export class UploadAvatarImage {
+export class UploadAvatarImageUseCase {
   constructor(private usersRepository: UsersRepository, private uploader: Uploader) { }
 
   async execute({ fileName, fileType, body, userId }: UploadAvatarImageRequest): Promise<UploadAvatarImageResponse> {

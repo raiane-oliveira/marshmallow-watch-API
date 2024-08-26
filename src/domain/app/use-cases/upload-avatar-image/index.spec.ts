@@ -1,19 +1,19 @@
 import { InMemoryUsersRepository } from "@/test/repositories/in-memory-users-repository"
-import { UploadAvatarImage } from "."
+import { UploadAvatarImageUseCase } from "."
 import { makeUser } from "@/test/factories/make-user"
 import { FakeUploader } from "@/test/storage/fake-uploader"
 import { InvalidAttachmentType } from "../../errors/invalid-attachment-type-error"
 
 let fakeUploader: FakeUploader
 let usersRepository: InMemoryUsersRepository
-let sut: UploadAvatarImage
+let sut: UploadAvatarImageUseCase
 
 describe("Upload Avatar Image Use Case", () => {
   beforeEach(() => {
     fakeUploader = new FakeUploader()
 
     usersRepository = new InMemoryUsersRepository()
-    sut = new UploadAvatarImage(usersRepository, fakeUploader)
+    sut = new UploadAvatarImageUseCase(usersRepository, fakeUploader)
   })
 
   it("should be able to upload an avatar image to user", async () => {
@@ -22,19 +22,19 @@ describe("Upload Avatar Image Use Case", () => {
 
     const result = await sut.execute({
       userId: user.id.toString(),
-      fileName: 'js-file',
-      fileType: 'image/png',
+      fileName: "js-file",
+      fileType: "image/png",
       body: Buffer.from(user.name),
     })
 
     expect(result.isRight()).toBe(true)
-    expect(fakeUploader.uploads[0].fileName).toEqual('js-file')
+    expect(fakeUploader.uploads[0].fileName).toEqual("js-file")
 
     const uploaderId = fakeUploader.uploads[0]
 
     if (result.isRight()) {
       expect(result.value.user).toEqual(expect.objectContaining({
-        avatarUrl: uploaderId.uploadId
+        avatarUrl: uploaderId.uploadId,
       }))
     }
   })
@@ -45,8 +45,8 @@ describe("Upload Avatar Image Use Case", () => {
 
     const result = await sut.execute({
       userId: user.id.toString(),
-      fileName: 'js-file-wrong',
-      fileType: 'image/gif',
+      fileName: "js-file-wrong",
+      fileType: "image/gif",
       body: Buffer.from(user.name),
     })
 
@@ -58,4 +58,3 @@ describe("Upload Avatar Image Use Case", () => {
     }
   })
 })
-
