@@ -8,6 +8,7 @@ declare module "knex/types/tables" {
     email: string
     password: string
     avatar_url_id?: string | null
+    verification_token?: string | null
     created_at: string
     updated_at?: string | null
   }
