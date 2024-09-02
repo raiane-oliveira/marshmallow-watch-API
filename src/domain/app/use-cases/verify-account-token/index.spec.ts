@@ -1,16 +1,16 @@
 import { InMemoryUsersRepository } from "@/test/repositories/in-memory-users-repository"
-import { ValidateVerificationTokenUseCase } from "."
+import { VerifyAccountTokenUseCase } from "."
 import { makeUser } from "@/test/factories/make-user"
 import { InvalidCredentialsError } from "../../errors/invalid-credentials-error"
 import { VerificationToken } from "../../entities/value-objects/verification-token"
 
 let usersRepository: InMemoryUsersRepository
-let sut: ValidateVerificationTokenUseCase
+let sut: VerifyAccountTokenUseCase
 
-describe("Validate verification token", () => {
+describe("Verify account token use case", () => {
   beforeEach(() => {
     usersRepository = new InMemoryUsersRepository()
-    sut = new ValidateVerificationTokenUseCase(usersRepository)
+    sut = new VerifyAccountTokenUseCase(usersRepository)
   })
 
   it("should be able to validate token", async () => {
