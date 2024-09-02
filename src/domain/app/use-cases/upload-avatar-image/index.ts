@@ -35,6 +35,10 @@ export class UploadAvatarImageUseCase {
       return left(new InvalidAttachmentType(fileType))
     }
 
+    if (user.avatarUrl) {
+      this.uploader.delete(user.avatarUrl)
+    }
+
     const { uploadId } = await this.uploader.upload({
       fileName,
       fileType,

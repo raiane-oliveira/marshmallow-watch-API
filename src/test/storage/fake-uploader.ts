@@ -21,4 +21,10 @@ export class FakeUploader implements Uploader {
       uploadId,
     }
   }
+
+  async delete(avatarUrlId: string) {
+    const avatarIndex = this.uploads.findIndex(item => item.uploadId === avatarUrlId)
+
+    this.uploads.splice(avatarIndex, 1)
+  }
 }

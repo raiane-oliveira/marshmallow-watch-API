@@ -57,4 +57,31 @@ describe("Upload Avatar Image Use Case", () => {
       expect(result.value.constructor).toBe(InvalidAttachmentType)
     }
   })
+
+  it("should be able to change previous avatar image and delete it", async () => {
+    const user = makeUser()
+    usersRepository.create(user)
+
+    const result = await sut.execute({
+      userId: user.id.toString(),
+      fileName: "js-file",
+      fileType: "image/png",
+      body: Buffer.from(user.name),
+    })
+
+    expect(result.isRight()).toBe(true)
+    expect(fakeUploader.uploads[0].fileName).toEqual("js-file")
+    expect(fakeUploader.uploads).toHaveLength(1)
+
+    const newResult = await sut.execute({
+      userId: user.id.toString(),
+      fileName: "js-file-2",
+      fileType: "image/jpg",
+      body: Buffer.from(user.name),
+    })
+
+    expect(newResult.isRight()).toBe(true)
+    expect(fakeUploader.uploads[0].fileName).toEqual("js-file-2")
+    expect(fakeUploader.uploads).toHaveLength(1)
+  })
 })

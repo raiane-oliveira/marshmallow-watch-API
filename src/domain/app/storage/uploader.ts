@@ -6,4 +6,5 @@ export interface UploadParams {
 
 export interface Uploader {
   upload(params: UploadParams): Promise<{ uploadId: string }>
+  delete(avatarUrlId: string): Promise<void>
 }

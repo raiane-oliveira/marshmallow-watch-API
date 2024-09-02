@@ -1,5 +1,5 @@
 import { Uploader, UploadParams } from "@/domain/app/storage/uploader"
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3"
+import { DeleteObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3"
 import { env } from "../env"
 import { randomUUID } from "node:crypto"
 
@@ -31,5 +31,12 @@ export class S3Uploader implements Uploader {
     return {
       uploadId: uniqueFileName,
     }
+  }
+
+  async delete(avatarUrlId: string) {
+    await this.client.send(new DeleteObjectCommand({
+      Bucket: env.AWS_BUCKET_NAME,
+      Key: avatarUrlId,
+    }))
   }
 }
