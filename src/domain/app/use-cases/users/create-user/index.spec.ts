@@ -1,7 +1,7 @@
 import { InMemoryUsersRepository } from "@/test/repositories/in-memory-users-repository"
 import { CreateUserUseCase } from "."
 import { FakeHasher } from "@/test/cryptography/fake-hasher"
-import { UserAlreadyExistsError } from "../../errors/user-already-exists-error"
+import { UserAlreadyExistsError } from "@/domain/app/errors/user-already-exists-error"
 
 const fakeHasher = new FakeHasher()
 

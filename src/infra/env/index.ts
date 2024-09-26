@@ -22,6 +22,9 @@ const envSchema = z.object({
   MAILER_SENDER_PASS: z.string(),
 
   WEBSITE_URL: z.string().url(),
+
+  TMDB_BASE_API_URL: z.string().url(),
+  TMDB_API_KEY: z.string(),
 })
 
 const envParsed = envSchema.safeParse(process.env)

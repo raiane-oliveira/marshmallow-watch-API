@@ -1,9 +1,9 @@
 import { Either, left, right } from "@/core/errors/either"
-import { User } from "../../entities/user"
-import { UsersRepository } from "../../repositories/users-repository"
-import { Uploader } from "../../storage/uploader"
+import { User } from "../../../entities/user"
+import { UsersRepository } from "../../../repositories/users-repository"
+import { Uploader } from "../../../storage/uploader"
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error"
-import { InvalidAttachmentType } from "../../errors/invalid-attachment-type-error"
+import { InvalidAttachmentType } from "../../../errors/invalid-attachment-type-error"
 
 interface UploadAvatarImageRequest {
   fileName: string

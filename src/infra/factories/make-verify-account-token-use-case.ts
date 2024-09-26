@@ -1,4 +1,4 @@
-import { VerifyAccountTokenUseCase } from "@/domain/app/use-cases/verify-account-token"
+import { VerifyAccountTokenUseCase } from "@/domain/app/use-cases/users/verify-account-token"
 import { DbUsersRepository } from "../database/repositories/db-users-repository"
 
 export function makeVerifyAccountTokenUseCase() {

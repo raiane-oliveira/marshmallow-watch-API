@@ -2,7 +2,7 @@ import { InMemoryUsersRepository } from "@/test/repositories/in-memory-users-rep
 import { UploadAvatarImageUseCase } from "."
 import { makeUser } from "@/test/factories/make-user"
 import { FakeUploader } from "@/test/storage/fake-uploader"
-import { InvalidAttachmentType } from "../../errors/invalid-attachment-type-error"
+import { InvalidAttachmentType } from "../../../errors/invalid-attachment-type-error"
 
 let fakeUploader: FakeUploader
 let usersRepository: InMemoryUsersRepository

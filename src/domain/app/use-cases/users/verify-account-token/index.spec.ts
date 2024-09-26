@@ -1,8 +1,8 @@
 import { InMemoryUsersRepository } from "@/test/repositories/in-memory-users-repository"
 import { VerifyAccountTokenUseCase } from "."
 import { makeUser } from "@/test/factories/make-user"
-import { InvalidCredentialsError } from "../../errors/invalid-credentials-error"
-import { VerificationToken } from "../../entities/value-objects/verification-token"
+import { InvalidCredentialsError } from "@/domain/app/errors/invalid-credentials-error"
+import { VerificationToken } from "@/domain/app/entities/value-objects/verification-token"
 
 let usersRepository: InMemoryUsersRepository
 let sut: VerifyAccountTokenUseCase

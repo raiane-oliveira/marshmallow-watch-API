@@ -1,4 +1,4 @@
-import { AuthenticateUserUseCase } from "@/domain/app/use-cases/authenticate-user"
+import { AuthenticateUserUseCase } from "@/domain/app/use-cases/users/authenticate-user"
 import { DbUsersRepository } from "../database/repositories/db-users-repository"
 import { BcryptHasher } from "../cryptography/bcrypt-hasher"
 

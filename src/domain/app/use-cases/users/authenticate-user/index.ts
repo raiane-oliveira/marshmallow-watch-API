@@ -1,8 +1,8 @@
 import { Either, left, right } from "@/core/errors/either"
-import { InvalidCredentialsError } from "../../errors/invalid-credentials-error"
-import { User } from "../../entities/user"
-import { UsersRepository } from "../../repositories/users-repository"
-import { HashCompare } from "../../cryptography/hash-compare"
+import { HashCompare } from "@/domain/app/cryptography/hash-compare"
+import { User } from "@/domain/app/entities/user"
+import { InvalidCredentialsError } from "@/domain/app/errors/invalid-credentials-error"
+import { UsersRepository } from "@/domain/app/repositories/users-repository"
 
 interface AuthenticateUserUseCaseRequest {
   email: string

@@ -1,6 +1,6 @@
 import { Either, left, right } from "@/core/errors/either"
-import { UsersRepository } from "../../repositories/users-repository"
-import { InvalidCredentialsError } from "../../errors/invalid-credentials-error"
+import { InvalidCredentialsError } from "@/domain/app/errors/invalid-credentials-error"
+import { UsersRepository } from "@/domain/app/repositories/users-repository"
 
 interface VerifyAccountTokenRequest {
   userId: string

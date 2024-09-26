@@ -1,4 +1,4 @@
-import { UploadAvatarImageUseCase } from "@/domain/app/use-cases/upload-avatar-image"
+import { UploadAvatarImageUseCase } from "@/domain/app/use-cases/users/upload-avatar-image"
 import { DbUsersRepository } from "../database/repositories/db-users-repository"
 import { S3Uploader } from "../storage/s3-uploader"
 

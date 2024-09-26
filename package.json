@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Explore exclusive trailers, create personalized lists, and more with Marshmallow Watch. Transform your entertainment discovery experience today!",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "dev": "tsx watch src/infra/server.ts",
     "build": "tsup src --out-dir build",

@@ -2,7 +2,7 @@ import { InMemoryUsersRepository } from "@/test/repositories/in-memory-users-rep
 import { AuthenticateUserUseCase } from "."
 import { FakeHasher } from "@/test/cryptography/fake-hasher"
 import { makeUser } from "@/test/factories/make-user"
-import { InvalidCredentialsError } from "../../errors/invalid-credentials-error"
+import { InvalidCredentialsError } from "@/domain/app/errors/invalid-credentials-error"
 
 const fakeHasher = new FakeHasher()
 
