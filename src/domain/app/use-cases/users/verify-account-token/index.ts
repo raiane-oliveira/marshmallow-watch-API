@@ -1,6 +1,6 @@
-import { Either, left, right } from "@/core/errors/either"
+import { type Either, left, right } from "@/core/errors/either"
 import { InvalidCredentialsError } from "@/domain/app/errors/invalid-credentials-error"
-import { UsersRepository } from "@/domain/app/repositories/users-repository"
+import type { UsersRepository } from "@/domain/app/repositories/users-repository"
 
 interface VerifyAccountTokenRequest {
   userId: string
@@ -10,9 +10,12 @@ interface VerifyAccountTokenRequest {
 type VerifyAccountTokenResponse = Either<InvalidCredentialsError, boolean>
 
 export class VerifyAccountTokenUseCase {
-  constructor(private usersRepository: UsersRepository) { }
+  constructor(private usersRepository: UsersRepository) {}
 
-  async execute({ userId, token }: VerifyAccountTokenRequest): Promise<VerifyAccountTokenResponse> {
+  async execute({
+    userId,
+    token,
+  }: VerifyAccountTokenRequest): Promise<VerifyAccountTokenResponse> {
     const user = await this.usersRepository.findById(userId)
 
     if (user?.verificationToken?.toString() !== token) {

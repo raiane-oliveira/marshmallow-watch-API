@@ -1,6 +1,6 @@
+import { makeMovie } from "@/test/factories/make-movie"
 import { InMemoryMoviesRepository } from "@/test/repositories/in-memory-movies-repository"
 import { DiscoverMoviesUseCase } from "."
-import { makeMovie } from "@/test/factories/make-movie"
 
 let moviesRepository: InMemoryMoviesRepository
 let sut: DiscoverMoviesUseCase
@@ -21,13 +21,15 @@ describe("Discover Movies Use Case", () => {
     expect(result.isRight()).toBeTruthy()
 
     if (result.isRight()) {
-      expect(result.value.movies).toEqual(expect.arrayContaining([
-        expect.objectContaining({
-          title: movie.title,
-          description: movie.description,
-          imagePath: movie.imagePath,
-        }),
-      ]))
+      expect(result.value.movies).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            title: movie.title,
+            description: movie.description,
+            imagePath: movie.imagePath,
+          }),
+        ])
+      )
     }
   })
 })

@@ -1,6 +1,6 @@
 import { Entity } from "@/core/entities/entity"
-import { UniqueEntityId } from "@/core/entities/unique-entity-id"
-import { Optional } from "@/core/types/optional"
+import type { UniqueEntityId } from "@/core/entities/unique-entity-id"
+import type { Optional } from "@/core/types/optional"
 import { VerificationToken } from "./value-objects/verification-token"
 
 export interface UserProps {
@@ -62,11 +62,14 @@ export class User extends Entity<UserProps> {
   }
 
   static create(props: Optional<UserProps, "createdAt">, id?: UniqueEntityId) {
-    const user = new User({
-      ...props,
-      verificationToken: props.verificationToken ?? new VerificationToken(),
-      createdAt: props.createdAt ?? new Date(),
-    }, id)
+    const user = new User(
+      {
+        ...props,
+        verificationToken: props.verificationToken ?? new VerificationToken(),
+        createdAt: props.createdAt ?? new Date(),
+      },
+      id
+    )
 
     return user
   }

@@ -1,13 +1,16 @@
-import { MovieParamsFilters, MoviesRepository } from "@/domain/app/repositories/movies-repository"
+import type {
+  MovieParamsFilters,
+  MoviesRepository,
+} from "@/domain/app/repositories/movies-repository"
 import { env } from "../env"
+import type { TmdbMovie } from "./interfaces/tmdb-movie"
 import { TmdbMoviesMapper } from "./mappers/tmdb-movies-mapper"
-import { TmdbMovie } from "./interfaces/tmdb-movie"
 
 export class TmdbApiRepository implements MoviesRepository {
   private baseUrl: URL
 
   constructor() {
-    this.baseUrl = new URL(`/3`, env.TMDB_BASE_API_URL)
+    this.baseUrl = new URL("/3", env.TMDB_BASE_API_URL)
   }
 
   private api(endpoint: string, options?: RequestInit) {
@@ -17,8 +20,13 @@ export class TmdbApiRepository implements MoviesRepository {
     return fetch(url, options)
   }
 
-  async findManyByRelease({ page, sortBy = "popularity.desc" }: MovieParamsFilters) {
-    const response = await this.api(`/3/discover/movie?page=${page}&sort_by=${sortBy}`)
+  async findManyByRelease({
+    page,
+    sortBy = "popularity.desc",
+  }: MovieParamsFilters) {
+    const response = await this.api(
+      `/3/discover/movie?page=${page}&sort_by=${sortBy}`
+    )
     const tmdbMovies = await response.json()
 
     return tmdbMovies.results?.map((tmdbMovie: TmdbMovie) => {

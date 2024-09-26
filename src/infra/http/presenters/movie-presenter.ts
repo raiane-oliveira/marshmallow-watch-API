@@ -1,4 +1,4 @@
-import { Movie } from "@/domain/app/entities/movie"
+import type { Movie } from "@/domain/app/entities/movie"
 
 export class MoviePresenter {
   static toHTTP(movie: Movie) {

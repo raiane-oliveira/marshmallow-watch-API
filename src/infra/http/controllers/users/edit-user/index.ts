@@ -1,11 +1,14 @@
 import { BadRequestError } from "@/core/errors/bad-request-error"
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error"
 import { makeEditUserUseCase } from "@/infra/factories/make-edit-user-use-case"
-import { FastifyReply, FastifyRequest } from "fastify"
+import type { FastifyReply, FastifyRequest } from "fastify"
 import { z } from "zod"
 
 // [PUT] /users/:userId
-export async function editUserController(req: FastifyRequest, reply: FastifyReply) {
+export async function editUserController(
+  req: FastifyRequest,
+  reply: FastifyReply
+) {
   const editUserBodySchema = z.object({
     name: z.string().trim(),
   })

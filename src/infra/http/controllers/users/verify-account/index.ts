@@ -1,17 +1,22 @@
 import { BadRequestError } from "@/core/errors/bad-request-error"
 import { InvalidCredentialsError } from "@/domain/app/errors/invalid-credentials-error"
 import { makeVerifyAccountTokenUseCase } from "@/infra/factories/make-verify-account-token-use-case"
-import { FastifyReply, FastifyRequest } from "fastify"
+import type { FastifyReply, FastifyRequest } from "fastify"
 import { z } from "zod"
 
 // [PUT] /auth/:userId/verify-account/:token
-export async function verifyAccountController(req: FastifyRequest, reply: FastifyReply) {
+export async function verifyAccountController(
+  req: FastifyRequest,
+  reply: FastifyReply
+) {
   const validateVerificationTokenRouteSchema = z.object({
     userId: z.string(),
     token: z.string(),
   })
 
-  const { userId, token } = validateVerificationTokenRouteSchema.parse(req.params)
+  const { userId, token } = validateVerificationTokenRouteSchema.parse(
+    req.params
+  )
 
   const useCase = makeVerifyAccountTokenUseCase()
 

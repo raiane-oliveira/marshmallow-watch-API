@@ -1,7 +1,7 @@
-import { FastifyInstance } from "fastify"
+import type { FastifyInstance } from "fastify"
+import { editUserController } from "./edit-user"
 import { uploadAvatarImageController } from "./upload-avatar-image"
 import { verifyAccountController } from "./verify-account"
-import { editUserController } from "./edit-user"
 
 export async function userRoutes(app: FastifyInstance) {
   app.post("/users/:userId/upload-avatar-image", uploadAvatarImageController)

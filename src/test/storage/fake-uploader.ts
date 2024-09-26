@@ -1,5 +1,5 @@
-import { Uploader, UploadParams } from "@/domain/app/storage/uploader"
-import { randomUUID } from "crypto"
+import { randomUUID } from "node:crypto"
+import type { UploadParams, Uploader } from "@/domain/app/storage/uploader"
 
 interface Upload {
   fileName: string
@@ -23,7 +23,9 @@ export class FakeUploader implements Uploader {
   }
 
   async delete(avatarUrlId: string) {
-    const avatarIndex = this.uploads.findIndex(item => item.uploadId === avatarUrlId)
+    const avatarIndex = this.uploads.findIndex(
+      item => item.uploadId === avatarUrlId
+    )
 
     this.uploads.splice(avatarIndex, 1)
   }

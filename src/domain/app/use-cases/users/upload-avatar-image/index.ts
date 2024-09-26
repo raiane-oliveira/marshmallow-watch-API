@@ -1,9 +1,9 @@
-import { Either, left, right } from "@/core/errors/either"
-import { User } from "../../../entities/user"
-import { UsersRepository } from "../../../repositories/users-repository"
-import { Uploader } from "../../../storage/uploader"
+import { type Either, left, right } from "@/core/errors/either"
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error"
+import type { User } from "../../../entities/user"
 import { InvalidAttachmentType } from "../../../errors/invalid-attachment-type-error"
+import type { UsersRepository } from "../../../repositories/users-repository"
+import type { Uploader } from "../../../storage/uploader"
 
 interface UploadAvatarImageRequest {
   fileName: string
@@ -20,9 +20,17 @@ type UploadAvatarImageResponse = Either<
 >
 
 export class UploadAvatarImageUseCase {
-  constructor(private usersRepository: UsersRepository, private uploader: Uploader) { }
+  constructor(
+    private usersRepository: UsersRepository,
+    private uploader: Uploader
+  ) {}
 
-  async execute({ fileName, fileType, body, userId }: UploadAvatarImageRequest): Promise<UploadAvatarImageResponse> {
+  async execute({
+    fileName,
+    fileType,
+    body,
+    userId,
+  }: UploadAvatarImageRequest): Promise<UploadAvatarImageResponse> {
     const user = await this.usersRepository.findById(userId)
 
     if (!user) {

@@ -1,5 +1,5 @@
-import { createTransport, Transporter } from "nodemailer"
-import SMTPTransport from "nodemailer/lib/smtp-transport"
+import { type Transporter, createTransport } from "nodemailer"
+import type SMTPTransport from "nodemailer/lib/smtp-transport"
 import { env } from "../env"
 
 interface SendMailData {

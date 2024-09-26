@@ -1,8 +1,8 @@
-import { InMemoryUsersRepository } from "@/test/repositories/in-memory-users-repository"
-import { AuthenticateUserUseCase } from "."
+import { InvalidCredentialsError } from "@/domain/app/errors/invalid-credentials-error"
 import { FakeHasher } from "@/test/cryptography/fake-hasher"
 import { makeUser } from "@/test/factories/make-user"
-import { InvalidCredentialsError } from "@/domain/app/errors/invalid-credentials-error"
+import { InMemoryUsersRepository } from "@/test/repositories/in-memory-users-repository"
+import { AuthenticateUserUseCase } from "."
 
 const fakeHasher = new FakeHasher()
 
@@ -16,11 +16,13 @@ describe("Authenticate User Use Case", () => {
   })
 
   it("should be able to authenticate the user", async () => {
-    usersRepository.create(makeUser({
-      name: "John Doe",
-      email: "johndoe@example.com",
-      password: await fakeHasher.hash("123456"),
-    }))
+    usersRepository.create(
+      makeUser({
+        name: "John Doe",
+        email: "johndoe@example.com",
+        password: await fakeHasher.hash("123456"),
+      })
+    )
 
     const result = await sut.execute({
       email: "johndoe@example.com",
@@ -30,10 +32,12 @@ describe("Authenticate User Use Case", () => {
     expect(result.isRight()).toBe(true)
 
     if (result.isRight()) {
-      expect(result.value.user).toEqual(expect.objectContaining({
-        name: "John Doe",
-        email: "johndoe@example.com",
-      }))
+      expect(result.value.user).toEqual(
+        expect.objectContaining({
+          name: "John Doe",
+          email: "johndoe@example.com",
+        })
+      )
     }
   })
 
@@ -51,11 +55,13 @@ describe("Authenticate User Use Case", () => {
   })
 
   it("should not be able to authenticate a user with wrong password", async () => {
-    usersRepository.create(makeUser({
-      name: "John Doe",
-      email: "johndoe@example.com",
-      password: await fakeHasher.hash("123456"),
-    }))
+    usersRepository.create(
+      makeUser({
+        name: "John Doe",
+        email: "johndoe@example.com",
+        password: await fakeHasher.hash("123456"),
+      })
+    )
 
     const result = await sut.execute({
       email: "johndoe@example.com",

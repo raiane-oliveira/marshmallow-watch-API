@@ -1,10 +1,13 @@
 import { BadRequestError } from "@/core/errors/bad-request-error"
 import { InvalidAttachmentType } from "@/domain/app/errors/invalid-attachment-type-error"
 import { makeUploadAvatarImageUseCase } from "@/infra/factories/make-upload-avatar-image-use-case"
-import { FastifyReply, FastifyRequest } from "fastify"
+import type { FastifyReply, FastifyRequest } from "fastify"
 import { z } from "zod"
 
-export async function uploadAvatarImageController(req: FastifyRequest, reply: FastifyReply) {
+export async function uploadAvatarImageController(
+  req: FastifyRequest,
+  reply: FastifyReply
+) {
   const fileData = await req.file()
   if (!fileData) {
     return reply.status(400).send({

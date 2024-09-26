@@ -1,7 +1,7 @@
+import { UserAlreadyExistsError } from "@/domain/app/errors/user-already-exists-error"
+import { FakeHasher } from "@/test/cryptography/fake-hasher"
 import { InMemoryUsersRepository } from "@/test/repositories/in-memory-users-repository"
 import { CreateUserUseCase } from "."
-import { FakeHasher } from "@/test/cryptography/fake-hasher"
-import { UserAlreadyExistsError } from "@/domain/app/errors/user-already-exists-error"
 
 const fakeHasher = new FakeHasher()
 
@@ -25,10 +25,12 @@ describe("Create User Use Case", () => {
     expect(usersRepository.items).toHaveLength(1)
 
     if (result.isRight()) {
-      expect(result.value.user).toEqual(expect.objectContaining({
-        name: "John Doe",
-        email: "johndoe@example.com",
-      }))
+      expect(result.value.user).toEqual(
+        expect.objectContaining({
+          name: "John Doe",
+          email: "johndoe@example.com",
+        })
+      )
     }
   })
 

@@ -1,6 +1,6 @@
+import { makeUser } from "@/test/factories/make-user"
 import { InMemoryUsersRepository } from "@/test/repositories/in-memory-users-repository"
 import { EditUserUseCase } from "."
-import { makeUser } from "@/test/factories/make-user"
 
 let usersRepository: InMemoryUsersRepository
 let sut: EditUserUseCase
@@ -25,9 +25,11 @@ describe("Edit User Use Case", () => {
     expect(result.isRight()).toBe(true)
 
     if (result.isRight()) {
-      expect(result.value.user).toEqual(expect.objectContaining({
-        name: "John Doe",
-      }))
+      expect(result.value.user).toEqual(
+        expect.objectContaining({
+          name: "John Doe",
+        })
+      )
     }
   })
 })

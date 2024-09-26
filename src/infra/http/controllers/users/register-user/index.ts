@@ -3,12 +3,15 @@ import { UserAlreadyExistsError } from "@/domain/app/errors/user-already-exists-
 import { env } from "@/infra/env"
 import { makeCreateUserUseCase } from "@/infra/factories/make-create-user-use-case"
 import { MailProvider } from "@/infra/mail/mail-provider"
-import { FastifyReply, FastifyRequest } from "fastify"
+import type { FastifyReply, FastifyRequest } from "fastify"
 import { z } from "zod"
 
 const mailer = new MailProvider()
 
-export async function registerUserController(req: FastifyRequest, reply: FastifyReply) {
+export async function registerUserController(
+  req: FastifyRequest,
+  reply: FastifyReply
+) {
   const registerUserBodySchema = z.object({
     name: z.string().trim(),
     email: z.string().email("Invalid e-mail").trim(),

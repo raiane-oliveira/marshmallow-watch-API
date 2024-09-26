@@ -1,7 +1,7 @@
-import { InMemoryUsersRepository } from "@/test/repositories/in-memory-users-repository"
-import { UploadAvatarImageUseCase } from "."
 import { makeUser } from "@/test/factories/make-user"
+import { InMemoryUsersRepository } from "@/test/repositories/in-memory-users-repository"
 import { FakeUploader } from "@/test/storage/fake-uploader"
+import { UploadAvatarImageUseCase } from "."
 import { InvalidAttachmentType } from "../../../errors/invalid-attachment-type-error"
 
 let fakeUploader: FakeUploader
@@ -33,9 +33,11 @@ describe("Upload Avatar Image Use Case", () => {
     const uploaderId = fakeUploader.uploads[0]
 
     if (result.isRight()) {
-      expect(result.value.user).toEqual(expect.objectContaining({
-        avatarUrl: uploaderId.uploadId,
-      }))
+      expect(result.value.user).toEqual(
+        expect.objectContaining({
+          avatarUrl: uploaderId.uploadId,
+        })
+      )
     }
   })
 

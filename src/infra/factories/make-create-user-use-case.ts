@@ -1,6 +1,6 @@
 import { CreateUserUseCase } from "@/domain/app/use-cases/users/create-user"
-import { DbUsersRepository } from "../database/repositories/db-users-repository"
 import { BcryptHasher } from "../cryptography/bcrypt-hasher"
+import { DbUsersRepository } from "../database/repositories/db-users-repository"
 
 export function makeCreateUserUseCase() {
   const repository = new DbUsersRepository()

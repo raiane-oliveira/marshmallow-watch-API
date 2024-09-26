@@ -1,8 +1,8 @@
+import { VerificationToken } from "@/domain/app/entities/value-objects/verification-token"
+import { InvalidCredentialsError } from "@/domain/app/errors/invalid-credentials-error"
+import { makeUser } from "@/test/factories/make-user"
 import { InMemoryUsersRepository } from "@/test/repositories/in-memory-users-repository"
 import { VerifyAccountTokenUseCase } from "."
-import { makeUser } from "@/test/factories/make-user"
-import { InvalidCredentialsError } from "@/domain/app/errors/invalid-credentials-error"
-import { VerificationToken } from "@/domain/app/entities/value-objects/verification-token"
 
 let usersRepository: InMemoryUsersRepository
 let sut: VerifyAccountTokenUseCase
@@ -20,7 +20,7 @@ describe("Verify account token use case", () => {
 
     const result = await sut.execute({
       userId: user.id.toString(),
-      token: user.verificationToken!.toString(),
+      token: user.verificationToken?.toString(),
     })
 
     if (result.isRight()) {

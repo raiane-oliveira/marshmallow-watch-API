@@ -1,5 +1,5 @@
-import { User } from "@/domain/app/entities/user"
-import { UsersRepository } from "@/domain/app/repositories/users-repository"
+import type { User } from "@/domain/app/entities/user"
+import type { UsersRepository } from "@/domain/app/repositories/users-repository"
 
 export class InMemoryUsersRepository implements UsersRepository {
   items: User[] = []
@@ -29,7 +29,9 @@ export class InMemoryUsersRepository implements UsersRepository {
   }
 
   async update(user: User) {
-    const userIndex = this.items.findIndex(item => item.id.toString() === user.id.toString())
+    const userIndex = this.items.findIndex(
+      item => item.id.toString() === user.id.toString()
+    )
 
     this.items[userIndex] = user
   }

@@ -12,26 +12,34 @@ describe("Register User [E2E]", () => {
   })
 
   test("POST /users/register", async () => {
-    await request(app.server).post("/users/register").send({
-      name: "User 01",
-      email: "user01@example.com",
-      password: "123456",
-    }).expect(201)
+    await request(app.server)
+      .post("/users/register")
+      .send({
+        name: "User 01",
+        email: "user01@example.com",
+        password: "123456",
+      })
+      .expect(201)
 
     const userDb = await database("users").first()
 
-    expect(userDb).toEqual(expect.objectContaining({
-      name: "User 01",
-      email: "user01@example.com",
-    }))
+    expect(userDb).toEqual(
+      expect.objectContaining({
+        name: "User 01",
+        email: "user01@example.com",
+      })
+    )
   })
 
   test("POST /users/register with duplicate email", async () => {
-    await request(app.server).post("/users/register").send({
-      name: "User 02",
-      email: "user01@example.com",
-      password: "123456",
-    }).expect(409)
+    await request(app.server)
+      .post("/users/register")
+      .send({
+        name: "User 02",
+        email: "user01@example.com",
+        password: "123456",
+      })
+      .expect(409)
 
     const userDb = await database("users").select("*")
 

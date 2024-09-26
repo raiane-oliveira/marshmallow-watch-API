@@ -1,6 +1,6 @@
-import { FastifyInstance } from "fastify"
-import { discoverMoviesController } from "./discover-movies"
+import type { FastifyInstance } from "fastify"
 import publicRoute from "../../middlewares/public-route"
+import { discoverMoviesController } from "./discover-movies"
 
 export async function movieRoutes(app: FastifyInstance) {
   app.register(publicRoute)

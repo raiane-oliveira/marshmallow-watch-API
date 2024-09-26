@@ -1,6 +1,6 @@
 import { Entity } from "@/core/entities/entity"
-import { UniqueEntityId } from "@/core/entities/unique-entity-id"
-import { Optional } from "@/core/types/optional"
+import type { UniqueEntityId } from "@/core/entities/unique-entity-id"
+import type { Optional } from "@/core/types/optional"
 
 export interface MovieProps {
   title: string
@@ -37,9 +37,12 @@ export class Movie extends Entity<MovieProps> {
   }
 
   static create(props: Optional<MovieProps, "addedAt">, id?: UniqueEntityId) {
-    return new Movie({
-      ...props,
-      addedAt: props.addedAt ?? new Date(),
-    }, id)
+    return new Movie(
+      {
+        ...props,
+        addedAt: props.addedAt ?? new Date(),
+      },
+      id
+    )
   }
 }

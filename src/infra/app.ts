@@ -1,14 +1,14 @@
-import fastify from "fastify"
-import multipart from "@fastify/multipart"
-import fastifyJwt from "@fastify/jwt"
 import fastifyCookie from "@fastify/cookie"
+import fastifyJwt from "@fastify/jwt"
+import multipart from "@fastify/multipart"
+import fastify from "fastify"
 
 import { ZodError } from "zod"
 import { env } from "./env"
+import { movieRoutes } from "./http/controllers/movies/routes"
+import { userPublicRoutes } from "./http/controllers/users/public-routes"
 import { userRoutes } from "./http/controllers/users/routes"
 import { verifyJWT } from "./http/middlewares/verify-jwt"
-import { userPublicRoutes } from "./http/controllers/users/public-routes"
-import { movieRoutes } from "./http/controllers/movies/routes"
 
 export const app = fastify()
 
@@ -41,8 +41,7 @@ app.setErrorHandler((err, _, reply) => {
 
   if (env.NODE_ENV !== "prod") {
     console.error(err)
-  }
-  else {
+  } else {
     // TODO: log to an external tool like DataDog/NewRelic/Sentry
   }
 

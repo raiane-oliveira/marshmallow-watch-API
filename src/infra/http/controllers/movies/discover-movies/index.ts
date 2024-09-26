@@ -1,11 +1,14 @@
 import { BadRequestError } from "@/core/errors/bad-request-error"
 import { makeDiscoverMoviesUseCase } from "@/infra/factories/make-discover-movies-use-case"
 import { MoviePresenter } from "@/infra/http/presenters/movie-presenter"
-import { FastifyReply, FastifyRequest } from "fastify"
+import type { FastifyReply, FastifyRequest } from "fastify"
 import { z } from "zod"
 
 // [GET] /movies/discover?page=1&orderBy=popularity.desc
-export async function discoverMoviesController(req: FastifyRequest, reply: FastifyReply) {
+export async function discoverMoviesController(
+  req: FastifyRequest,
+  reply: FastifyReply
+) {
   const discoverMoviesQuerySchema = z.object({
     page: z.coerce.number().optional().default(1),
     orderBy: z.string().optional(),
