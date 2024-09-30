@@ -1,6 +1,7 @@
 import { InMemoryUsersRepository } from "@/test/repositories/in-memory-users-repository"
 import { GetUserProfileUseCase } from "."
 import { makeUser } from "@/test/factories/make-user"
+import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error"
 
 let usersRepository: InMemoryUsersRepository
 let sut: GetUserProfileUseCase
@@ -32,5 +33,14 @@ describe("Get User Profile Use Case", () => {
         })
       )
     }
+  })
+
+  it("should not be able to get inexistent user profile", async () => {
+    const result = await sut.execute({
+      username: "inexistentusername",
+    })
+
+    expect(result.isLeft())
+    expect(result.value).toBeInstanceOf(ResourceNotFoundError)
   })
 })

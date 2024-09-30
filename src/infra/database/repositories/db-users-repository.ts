@@ -1,3 +1,4 @@
+import type { PaginationParams } from "@/core/pagination-params"
 import type { User } from "@/domain/app/entities/user"
 import type { UsersRepository } from "@/domain/app/repositories/users-repository"
 import { eq } from "drizzle-orm"
@@ -6,6 +7,16 @@ import { DbUsersMapper } from "../mappers/db-users-mapper"
 import { users } from "../schema"
 
 export class DbUsersRepository implements UsersRepository {
+  async findMany({ page }: PaginationParams) {
+    const usersReturn = await db
+      .select()
+      .from(users)
+      .offset((page - 1) * 20)
+      .limit(page * 20)
+
+    return usersReturn.map(DbUsersMapper.toDomain)
+  }
+
   async findByEmail(email: string) {
     const user = await db.select().from(users).where(eq(users.email, email))
 

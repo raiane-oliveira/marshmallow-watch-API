@@ -4,6 +4,7 @@ import { authenticateUserController } from "./authenticate-user"
 import { refreshTokenController } from "./refresh-token"
 import { registerUserController } from "./register-user"
 import { getUserProfileController } from "./get-user-profile"
+import { fetchUsersController } from "./fetch-users"
 
 export async function userPublicRoutes(app: FastifyInstance) {
   app.register(publicRoutePlugin)
@@ -13,5 +14,6 @@ export async function userPublicRoutes(app: FastifyInstance) {
 
   app.patch("/token/refresh", refreshTokenController)
 
+  app.get("/users", fetchUsersController)
   app.get("/users/:username", getUserProfileController)
 }
