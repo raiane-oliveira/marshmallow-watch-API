@@ -1,23 +1,10 @@
-import knexInstance from "knex"
+import { drizzle } from "drizzle-orm/postgres-js"
+import postgres from "postgres"
 import { env } from "../env"
+import * as schema from "./schema"
 
-const { knex: setupKnex } = knexInstance
-
-export const config: knexInstance.Knex.Config = {
-  client: "pg",
-  connection: env.DATABASE_URL,
-  debug: env.NODE_ENV === "dev",
-  pool: {
-    min: 0,
-    max: 10,
-  },
-  migrations: {
-    extension: "ts",
-    tableName: "migrations",
-    directory: "./db/migrations",
-  },
-  useNullAsDefault: true,
-  // TODO: log: {}
-}
-
-export const database = setupKnex(config)
+export const connection = postgres(env.DATABASE_URL)
+export const db = drizzle(connection, {
+  schema,
+  logger: true,
+})

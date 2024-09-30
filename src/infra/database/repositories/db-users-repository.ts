@@ -1,50 +1,40 @@
 import type { User } from "@/domain/app/entities/user"
 import type { UsersRepository } from "@/domain/app/repositories/users-repository"
-import { database } from ".."
+import { eq } from "drizzle-orm"
+import { db } from ".."
 import { DbUsersMapper } from "../mappers/db-users-mapper"
+import { users } from "../schema"
 
 export class DbUsersRepository implements UsersRepository {
   async findByEmail(email: string) {
-    const user = await database("users")
-      .select("*")
-      .where({
-        email,
-      })
-      .first()
+    const user = await db.select().from(users).where(eq(users.email, email))
 
-    if (!user) {
+    if (!user[0]) {
       return null
     }
 
-    return DbUsersMapper.toDomain(user)
+    return DbUsersMapper.toDomain(user[0])
   }
 
   async findById(id: string) {
-    const user = await database("users")
-      .select("*")
-      .where({
-        id,
-      })
-      .first()
+    const user = await db.select().from(users).where(eq(users.id, id))
 
-    if (!user) {
+    if (!user[0]) {
       return null
     }
 
-    return DbUsersMapper.toDomain(user)
+    return DbUsersMapper.toDomain(user[0])
   }
 
   async create(user: User) {
     const data = DbUsersMapper.toDatabase(user)
 
-    await database.insert(data).into("users").returning("*")
+    await db.insert(users).values(data)
   }
 
   async update(user: User) {
     const data = DbUsersMapper.toDatabase(user)
 
-    await database.update(data).from("users").where({
-      id: data.id,
-    })
+    await db.update(users).set(data).where(eq(users.id, user.id.toString()))
   }
 }

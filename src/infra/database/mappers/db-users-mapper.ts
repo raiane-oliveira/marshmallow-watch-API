@@ -1,19 +1,19 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id"
 import { User } from "@/domain/app/entities/user"
 import { VerificationToken } from "@/domain/app/entities/value-objects/verification-token"
-import type { UserDb } from "knex/types/tables"
+import type { InsertUser, SelectUser } from "../schema"
 
 export class DbUsersMapper {
-  static toDomain(raw: UserDb) {
+  static toDomain(raw: SelectUser) {
     const data = User.create(
       {
         name: raw.name,
         email: raw.email,
         password: raw.password,
-        avatarUrl: raw.avatar_url_id,
-        verificationToken: new VerificationToken(raw.verification_token),
-        createdAt: new Date(raw.created_at),
-        updatedAt: raw.updated_at ? new Date(raw.updated_at) : undefined,
+        avatarUrl: raw.avatarUrlId,
+        verificationToken: new VerificationToken(raw.verificationToken),
+        createdAt: new Date(raw.createdAt),
+        updatedAt: raw.updatedAt ? new Date(raw.updatedAt) : undefined,
       },
       new UniqueEntityId(raw.id)
     )
@@ -22,13 +22,13 @@ export class DbUsersMapper {
   }
 
   static toDatabase(raw: User) {
-    const data = {
+    const data: InsertUser = {
       id: raw.id.toString(),
       name: raw.name,
       email: raw.email,
       password: raw.password,
-      avatar_url_id: raw.avatarUrl,
-      verification_token: raw.verificationToken?.toString(),
+      avatarUrlId: raw.avatarUrl,
+      verificationToken: raw.verificationToken?.toString(),
     }
 
     return data
