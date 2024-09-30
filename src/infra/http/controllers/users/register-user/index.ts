@@ -1,4 +1,5 @@
 import { BadRequestError } from "@/core/errors/bad-request-error"
+import { InvalidUsernameError } from "@/core/errors/invalid-username-error"
 import { UserAlreadyExistsError } from "@/domain/app/errors/user-already-exists-error"
 import { env } from "@/infra/env"
 import { makeCreateUserUseCase } from "@/infra/factories/make-create-user-use-case"
@@ -14,16 +15,20 @@ export async function registerUserController(
 ) {
   const registerUserBodySchema = z.object({
     name: z.string().trim(),
+    username: z.string().trim(),
     email: z.string().email("Invalid e-mail").trim(),
     password: z.string().min(6, "Invalid password length"),
   })
 
-  const { name, email, password } = registerUserBodySchema.parse(req.body)
+  const { name, email, password, username } = registerUserBodySchema.parse(
+    req.body
+  )
 
   const createUserUseCase = makeCreateUserUseCase()
 
   const result = await createUserUseCase.execute({
     name,
+    username,
     email,
     password,
   })
@@ -34,6 +39,11 @@ export async function registerUserController(
     switch (err.constructor) {
       case UserAlreadyExistsError: {
         return reply.status(409).send({
+          message: err.message,
+        })
+      }
+      case InvalidUsernameError: {
+        return reply.status(400).send({
           message: err.message,
         })
       }

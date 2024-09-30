@@ -1,4 +1,5 @@
 import { BadRequestError } from "@/core/errors/bad-request-error"
+import { InvalidUsernameError } from "@/core/errors/invalid-username-error"
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error"
 import { makeEditUserUseCase } from "@/infra/factories/make-edit-user-use-case"
 import type { FastifyReply, FastifyRequest } from "fastify"
@@ -11,6 +12,7 @@ export async function editUserController(
 ) {
   const editUserBodySchema = z.object({
     name: z.string().trim(),
+    username: z.string().trim(),
   })
 
   const editUserParamsSchema = z.object({
@@ -18,13 +20,14 @@ export async function editUserController(
   })
 
   const { userId } = editUserParamsSchema.parse(req.params)
-  const { name } = editUserBodySchema.parse(req.body)
+  const { name, username } = editUserBodySchema.parse(req.body)
 
   const editUserUseCase = makeEditUserUseCase()
 
   const result = await editUserUseCase.execute({
     userId,
     name,
+    username,
   })
 
   if (result.isLeft()) {
@@ -33,6 +36,11 @@ export async function editUserController(
     switch (err.constructor) {
       case ResourceNotFoundError: {
         return reply.status(404).send({
+          message: err.message,
+        })
+      }
+      case InvalidUsernameError: {
+        return reply.status(400).send({
           message: err.message,
         })
       }

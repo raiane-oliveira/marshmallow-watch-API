@@ -2,6 +2,7 @@ import { UserAlreadyExistsError } from "@/domain/app/errors/user-already-exists-
 import { FakeHasher } from "@/test/cryptography/fake-hasher"
 import { InMemoryUsersRepository } from "@/test/repositories/in-memory-users-repository"
 import { CreateUserUseCase } from "."
+import { InvalidUsernameError } from "@/core/errors/invalid-username-error"
 
 const fakeHasher = new FakeHasher()
 
@@ -17,6 +18,7 @@ describe("Create User Use Case", () => {
   it("should be able to create an user", async () => {
     const result = await sut.execute({
       name: "John Doe",
+      username: "johndoe",
       email: "johndoe@example.com",
       password: "123456",
     })
@@ -37,12 +39,14 @@ describe("Create User Use Case", () => {
   it("should not be able to create a user with same email", async () => {
     await sut.execute({
       name: "John Doe",
+      username: "johndoe",
       email: "johndoe@example.com",
       password: "123456",
     })
 
     const result = await sut.execute({
       name: "John Doe 2",
+      username: "johndoe",
       email: "johndoe@example.com",
       password: "123456",
     })
@@ -58,6 +62,7 @@ describe("Create User Use Case", () => {
   it("should hash user password", async () => {
     const result = await sut.execute({
       name: "John doe",
+      username: "johndoe",
       email: "johndoe@example.com",
       password: "123456",
     })
@@ -66,6 +71,22 @@ describe("Create User Use Case", () => {
 
     if (result.isRight()) {
       expect(usersRepository.items[0].password).toEqual("123456-hashed")
+    }
+  })
+
+  it("should not be able to create an user with invalid username", async () => {
+    const result = await sut.execute({
+      name: "John Doe",
+      username: "john doe23$_%",
+      email: "johndoe@example.com",
+      password: "123456",
+    })
+
+    expect(result.isLeft()).toBe(true)
+    expect(usersRepository.items).toHaveLength(0)
+
+    if (result.isLeft()) {
+      expect(result.value.constructor).toBe(InvalidUsernameError)
     }
   })
 })

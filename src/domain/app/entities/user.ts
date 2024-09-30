@@ -2,9 +2,11 @@ import { Entity } from "@/core/entities/entity"
 import type { UniqueEntityId } from "@/core/entities/unique-entity-id"
 import type { Optional } from "@/core/types/optional"
 import { VerificationToken } from "./value-objects/verification-token"
+import type { Username } from "./value-objects/username"
 
 export interface UserProps {
   name: string
+  username: Username
   email: string
   password: string
   avatarUrl?: string | null
@@ -25,6 +27,14 @@ export class User extends Entity<UserProps> {
   set name(value) {
     this.props.name = value
     this.touch()
+  }
+
+  get username() {
+    return this.props.username
+  }
+
+  set username(value) {
+    this.props.username = value
   }
 
   get email() {

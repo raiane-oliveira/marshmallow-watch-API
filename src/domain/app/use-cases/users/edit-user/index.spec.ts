@@ -16,10 +16,12 @@ describe("Edit User Use Case", () => {
     usersRepository.create(user)
 
     expect(usersRepository.items[0].name).toEqual(user.name)
+    expect(usersRepository.items[0].username).toEqual(user.username)
 
     const result = await sut.execute({
       userId: user.id.toString(),
       name: "John Doe",
+      username: "johndoe",
     })
 
     expect(result.isRight()).toBe(true)

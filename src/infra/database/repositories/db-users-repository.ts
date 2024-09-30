@@ -26,6 +26,19 @@ export class DbUsersRepository implements UsersRepository {
     return DbUsersMapper.toDomain(user[0])
   }
 
+  async findByUsername(username: string) {
+    const user = await db
+      .select()
+      .from(users)
+      .where(eq(users.username, username))
+
+    if (!user[0]) {
+      return null
+    }
+
+    return DbUsersMapper.toDomain(user[0])
+  }
+
   async create(user: User) {
     const data = DbUsersMapper.toDatabase(user)
 

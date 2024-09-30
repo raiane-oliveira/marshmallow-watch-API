@@ -8,6 +8,13 @@
       "when": 1727371026473,
       "tag": "0000_careful_azazel",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1727714439983,
+      "tag": "0001_little_black_bolt",
+      "breakpoints": true
     }
   ]
 }
