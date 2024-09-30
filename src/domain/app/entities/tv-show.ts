@@ -1,15 +1,15 @@
 import { Entity } from "@/core/entities/entity"
 import type { UniqueEntityId } from "@/core/entities/unique-entity-id"
 
-export interface MovieProps {
+export interface TvShowProps {
   title: string
   description: string
   imagePath?: string
   genreIds: UniqueEntityId[]
-  releaseAt: Date | null
+  firstAirDate: Date
 }
 
-export class Movie extends Entity<MovieProps> {
+export class TvShow extends Entity<TvShowProps> {
   get title() {
     return this.props.title
   }
@@ -26,11 +26,13 @@ export class Movie extends Entity<MovieProps> {
     return this.props.genreIds
   }
 
-  get releaseAt() {
-    return this.props.releaseAt
+  get firstAirDate() {
+    return this.props.firstAirDate
   }
 
-  static create(props: MovieProps, id?: UniqueEntityId) {
-    return new Movie(props, id)
+  static create(props: TvShowProps, id?: UniqueEntityId) {
+    const tvShow = new TvShow(props, id)
+
+    return tvShow
   }
 }

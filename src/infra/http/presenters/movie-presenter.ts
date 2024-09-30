@@ -9,7 +9,6 @@ export class MoviePresenter {
       genreIds: movie.genreIds.map(id => id.toString()),
       imageUrl: `https://image.tmdb.org/t/p${movie.imagePath}`,
       releaseAt: movie.releaseAt,
-      addedAt: movie.addedAt,
     }
   }
 }

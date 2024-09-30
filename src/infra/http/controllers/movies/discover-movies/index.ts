@@ -4,7 +4,7 @@ import { MoviePresenter } from "@/infra/http/presenters/movie-presenter"
 import type { FastifyReply, FastifyRequest } from "fastify"
 import { z } from "zod"
 
-// [GET] /movies/discover?page=1&orderBy=popularity.desc
+// [GET] /discover/movies?page=1&orderBy=popularity.desc
 export async function discoverMoviesController(
   req: FastifyRequest,
   reply: FastifyReply

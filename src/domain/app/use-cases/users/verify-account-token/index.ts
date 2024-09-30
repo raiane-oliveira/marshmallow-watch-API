@@ -1,4 +1,5 @@
 import { type Either, left, right } from "@/core/errors/either"
+import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error"
 import { InvalidCredentialsError } from "@/domain/app/errors/invalid-credentials-error"
 import type { UsersRepository } from "@/domain/app/repositories/users-repository"
 
@@ -7,10 +8,13 @@ interface VerifyAccountTokenRequest {
   token: string
 }
 
-type VerifyAccountTokenResponse = Either<InvalidCredentialsError, boolean>
+type VerifyAccountTokenResponse = Either<
+  ResourceNotFoundError | InvalidCredentialsError,
+  boolean
+>
 
 export class VerifyAccountTokenUseCase {
-  constructor(private usersRepository: UsersRepository) {}
+  constructor(private usersRepository: UsersRepository) { }
 
   async execute({
     userId,
@@ -18,7 +22,11 @@ export class VerifyAccountTokenUseCase {
   }: VerifyAccountTokenRequest): Promise<VerifyAccountTokenResponse> {
     const user = await this.usersRepository.findById(userId)
 
-    if (user?.verificationToken?.toString() !== token) {
+    if (!user) {
+      return left(new ResourceNotFoundError())
+    }
+
+    if (user.verificationToken?.toString() !== token) {
       return left(new InvalidCredentialsError())
     }
 

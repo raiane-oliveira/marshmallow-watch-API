@@ -5,5 +5,5 @@ import { discoverMoviesController } from "./discover-movies"
 export async function movieRoutes(app: FastifyInstance) {
   app.register(publicRoute)
 
-  app.get("/movies/discover", discoverMoviesController)
+  app.get("/discover/movies", discoverMoviesController)
 }
