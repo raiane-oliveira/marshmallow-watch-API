@@ -5,11 +5,11 @@ import fastify from "fastify"
 
 import { ZodError } from "zod"
 import { env } from "./env"
-import { movieRoutes } from "./http/controllers/movies/routes"
+import { moviePublicRoutes } from "./http/controllers/movies/public-routes"
 import { userPublicRoutes } from "./http/controllers/users/public-routes"
 import { userRoutes } from "./http/controllers/users/routes"
 import { verifyJWT } from "./http/middlewares/verify-jwt"
-import { tvShowRoutes } from "./http/controllers/tv-shows/routes"
+import { tvShowPublicRoutes } from "./http/controllers/tv-shows/public-routes"
 
 export const app = fastify()
 
@@ -28,8 +28,8 @@ app.register(multipart)
 
 app.addHook("preHandler", verifyJWT)
 
-app.register(tvShowRoutes)
-app.register(movieRoutes)
+app.register(tvShowPublicRoutes)
+app.register(moviePublicRoutes)
 app.register(userRoutes)
 app.register(userPublicRoutes)
 
