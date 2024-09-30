@@ -24,7 +24,7 @@ export class CreateUserUseCase {
   constructor(
     private usersRepository: UsersRepository,
     private hashGenerator: HashGenerator
-  ) { }
+  ) {}
 
   async execute({
     name,

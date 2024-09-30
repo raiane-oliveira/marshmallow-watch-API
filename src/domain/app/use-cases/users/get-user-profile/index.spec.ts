@@ -1,7 +1,7 @@
+import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error"
+import { makeUser } from "@/test/factories/make-user"
 import { InMemoryUsersRepository } from "@/test/repositories/in-memory-users-repository"
 import { GetUserProfileUseCase } from "."
-import { makeUser } from "@/test/factories/make-user"
-import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error"
 
 let usersRepository: InMemoryUsersRepository
 let sut: GetUserProfileUseCase

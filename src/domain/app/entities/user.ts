@@ -1,8 +1,8 @@
 import { Entity } from "@/core/entities/entity"
 import type { UniqueEntityId } from "@/core/entities/unique-entity-id"
 import type { Optional } from "@/core/types/optional"
-import { VerificationToken } from "./value-objects/verification-token"
 import type { Username } from "./value-objects/username"
+import { VerificationToken } from "./value-objects/verification-token"
 
 export interface UserProps {
   name: string

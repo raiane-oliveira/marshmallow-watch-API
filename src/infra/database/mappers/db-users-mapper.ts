@@ -1,8 +1,8 @@
 import { UniqueEntityId } from "@/core/entities/unique-entity-id"
 import { User } from "@/domain/app/entities/user"
+import { Username } from "@/domain/app/entities/value-objects/username"
 import { VerificationToken } from "@/domain/app/entities/value-objects/verification-token"
 import type { InsertUser, SelectUser } from "../schema"
-import { Username } from "@/domain/app/entities/value-objects/username"
 
 export class DbUsersMapper {
   static toDomain(raw: SelectUser) {

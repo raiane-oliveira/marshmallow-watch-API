@@ -14,7 +14,7 @@ type FetchUsersUseCaseResponse = Either<
 >
 
 export class FetchUsersUseCase {
-  constructor(private usersRepository: UsersRepository) { }
+  constructor(private usersRepository: UsersRepository) {}
 
   async execute({
     page,

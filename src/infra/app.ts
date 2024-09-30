@@ -6,10 +6,10 @@ import fastify from "fastify"
 import { ZodError } from "zod"
 import { env } from "./env"
 import { moviePublicRoutes } from "./http/controllers/movies/public-routes"
+import { tvShowPublicRoutes } from "./http/controllers/tv-shows/public-routes"
 import { userPublicRoutes } from "./http/controllers/users/public-routes"
 import { userRoutes } from "./http/controllers/users/routes"
 import { verifyJWT } from "./http/middlewares/verify-jwt"
-import { tvShowPublicRoutes } from "./http/controllers/tv-shows/public-routes"
 
 export const app = fastify()
 

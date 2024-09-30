@@ -19,7 +19,7 @@ type EditUserUseCaseResponse = Either<
 >
 
 export class EditUserUseCase {
-  constructor(private usersRepository: UsersRepository) { }
+  constructor(private usersRepository: UsersRepository) {}
 
   async execute({
     userId,

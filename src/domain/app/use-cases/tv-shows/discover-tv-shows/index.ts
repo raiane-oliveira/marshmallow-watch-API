@@ -5,7 +5,7 @@ import type {
   TvShowsRepository,
 } from "@/domain/app/repositories/tv-shows-repository"
 
-interface DiscoverTvShowsUseCaseRequest extends TvShowParamsFilters { }
+interface DiscoverTvShowsUseCaseRequest extends TvShowParamsFilters {}
 
 type DiscoverTvShowsUseCaseResponse = Either<
   null,
@@ -15,7 +15,7 @@ type DiscoverTvShowsUseCaseResponse = Either<
 >
 
 export class DiscoverTvShowsUseCase {
-  constructor(private tvShowsRepository: TvShowsRepository) { }
+  constructor(private tvShowsRepository: TvShowsRepository) {}
 
   async execute({
     page,

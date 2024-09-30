@@ -1,5 +1,5 @@
-import { InMemoryUsersRepository } from "@/test/repositories/in-memory-users-repository"
 import { makeUser } from "@/test/factories/make-user"
+import { InMemoryUsersRepository } from "@/test/repositories/in-memory-users-repository"
 import { FetchUsersUseCase } from "."
 
 let usersRepository: InMemoryUsersRepository

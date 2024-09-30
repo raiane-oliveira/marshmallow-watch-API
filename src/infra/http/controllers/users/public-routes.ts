@@ -1,10 +1,10 @@
 import type { FastifyInstance } from "fastify"
 import publicRoutePlugin from "../../middlewares/public-route"
 import { authenticateUserController } from "./authenticate-user"
+import { fetchUsersController } from "./fetch-users"
+import { getUserProfileController } from "./get-user-profile"
 import { refreshTokenController } from "./refresh-token"
 import { registerUserController } from "./register-user"
-import { getUserProfileController } from "./get-user-profile"
-import { fetchUsersController } from "./fetch-users"
 
 export async function userPublicRoutes(app: FastifyInstance) {
   app.register(publicRoutePlugin)

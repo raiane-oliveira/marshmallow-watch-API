@@ -14,7 +14,7 @@ type VerifyAccountTokenResponse = Either<
 >
 
 export class VerifyAccountTokenUseCase {
-  constructor(private usersRepository: UsersRepository) { }
+  constructor(private usersRepository: UsersRepository) {}
 
   async execute({
     userId,

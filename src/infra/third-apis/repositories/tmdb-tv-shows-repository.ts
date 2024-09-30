@@ -8,7 +8,8 @@ import { TmdbApiProvider } from "../tmdb-api-provider"
 
 export class TmdbTvShowsRepository
   extends TmdbApiProvider
-  implements TvShowsRepository {
+  implements TvShowsRepository
+{
   async findManyByRelease({
     page,
     sortBy = "popularity.desc",

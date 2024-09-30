@@ -1,8 +1,8 @@
+import { InvalidUsernameError } from "@/core/errors/invalid-username-error"
 import { UserAlreadyExistsError } from "@/domain/app/errors/user-already-exists-error"
 import { FakeHasher } from "@/test/cryptography/fake-hasher"
 import { InMemoryUsersRepository } from "@/test/repositories/in-memory-users-repository"
 import { CreateUserUseCase } from "."
-import { InvalidUsernameError } from "@/core/errors/invalid-username-error"
 
 const fakeHasher = new FakeHasher()
 

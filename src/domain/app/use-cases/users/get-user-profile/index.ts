@@ -1,4 +1,4 @@
-import { left, right, type Either } from "@/core/errors/either"
+import { type Either, left, right } from "@/core/errors/either"
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error"
 import type { User } from "@/domain/app/entities/user"
 import type { UsersRepository } from "@/domain/app/repositories/users-repository"
@@ -15,7 +15,7 @@ type GetUserProfileUseCaseResponse = Either<
 >
 
 export class GetUserProfileUseCase {
-  constructor(private usersRepository: UsersRepository) { }
+  constructor(private usersRepository: UsersRepository) {}
 
   async execute({
     username,
