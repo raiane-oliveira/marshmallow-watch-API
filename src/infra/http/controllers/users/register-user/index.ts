@@ -15,7 +15,7 @@ export async function registerUserController(
 ) {
   const registerUserBodySchema = z.object({
     name: z.string().trim(),
-    username: z.string().trim(),
+    username: z.string().min(3, "Invalid username length").trim(),
     email: z.string().email("Invalid e-mail").trim(),
     password: z.string().min(6, "Invalid password length"),
   })
@@ -57,6 +57,25 @@ export async function registerUserController(
 
   const { user } = result.value
 
+  const accessToken = await reply.jwtSign(
+    {},
+    {
+      sign: {
+        sub: user.id.toString(),
+      },
+    }
+  )
+
+  const refreshToken = await reply.jwtSign(
+    {},
+    {
+      sign: {
+        sub: user.id.toString(),
+        expiresIn: "7d",
+      },
+    }
+  )
+
   mailer.send({
     to: {
       name: user.name,
@@ -70,5 +89,15 @@ export async function registerUserController(
           `,
   })
 
-  return reply.status(201).send()
+  return reply
+    .setCookie("refresh_token", refreshToken, {
+      path: "/",
+      secure: true,
+      sameSite: true,
+      httpOnly: true,
+    })
+    .status(201)
+    .send({
+      token: accessToken,
+    })
 }

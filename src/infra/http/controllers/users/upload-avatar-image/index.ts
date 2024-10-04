@@ -48,5 +48,5 @@ export async function uploadAvatarImageController(
     }
   }
 
-  return reply.status(201).send()
+  return reply.status(201).send({})
 }

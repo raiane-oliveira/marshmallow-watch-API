@@ -42,5 +42,5 @@ export async function verifyAccountController(
     }
   }
 
-  return reply.status(204).send()
+  return reply.status(204).send({})
 }

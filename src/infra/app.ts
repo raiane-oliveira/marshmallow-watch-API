@@ -1,3 +1,4 @@
+import fastifyCors from "@fastify/cors"
 import fastifyCookie from "@fastify/cookie"
 import fastifyJwt from "@fastify/jwt"
 import multipart from "@fastify/multipart"
@@ -23,6 +24,11 @@ app.register(fastifyJwt, {
     cookieName: "refresh_token",
     signed: false,
   },
+})
+
+app.register(fastifyCors, {
+  origin: env.WEBSITE_URL,
+  credentials: true,
 })
 app.register(multipart)
 
