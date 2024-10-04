@@ -1,6 +1,8 @@
 import { BadRequestError } from "@/core/errors/bad-request-error"
 import { InvalidUsernameError } from "@/core/errors/invalid-username-error"
 import { UserAlreadyExistsError } from "@/domain/app/errors/user-already-exists-error"
+import { localeQuerySchema } from "@/i18n"
+import { getLanguage } from "@/i18n/get-language"
 import { env } from "@/infra/env"
 import { makeCreateUserUseCase } from "@/infra/factories/make-create-user-use-case"
 import { MailProvider } from "@/infra/mail/mail-provider"
@@ -13,11 +15,24 @@ export async function registerUserController(
   req: FastifyRequest,
   reply: FastifyReply
 ) {
+  const { lang } = localeQuerySchema.parse(req.query)
+  const _dict = getLanguage(lang)
+  const sharedDictErrors = _dict.shared.errors
+  const dict = _dict.requests.registerUser
+
   const registerUserBodySchema = z.object({
-    name: z.string().trim(),
-    username: z.string().min(3, "Invalid username length").trim(),
-    email: z.string().email("Invalid e-mail").trim(),
-    password: z.string().min(6, "Invalid password length"),
+    name: z.string({ required_error: dict.inputs.name.errors.required }).trim(),
+    username: z
+      .string({ required_error: dict.inputs.username.errors.required })
+      .min(3, dict.inputs.username.errors.invalid)
+      .trim(),
+    email: z
+      .string({ required_error: dict.inputs.email.errors.required })
+      .email(dict.inputs.email.errors.invalid)
+      .trim(),
+    password: z
+      .string({ required_error: dict.inputs.password.errors.required })
+      .min(6, dict.inputs.password.errors.invalid),
   })
 
   const { name, email, password, username } = registerUserBodySchema.parse(
@@ -39,12 +54,12 @@ export async function registerUserController(
     switch (err.constructor) {
       case UserAlreadyExistsError: {
         return reply.status(409).send({
-          message: err.message,
+          message: dict.response.errors.userAlreadyExists,
         })
       }
       case InvalidUsernameError: {
         return reply.status(400).send({
-          message: err.message,
+          message: sharedDictErrors.invalidUsername,
         })
       }
       default: {
