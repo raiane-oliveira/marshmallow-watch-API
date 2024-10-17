@@ -73,7 +73,9 @@ export async function registerUserController(
   const { user } = result.value
 
   const accessToken = await reply.jwtSign(
-    {},
+    {
+      username: user.username.toString(),
+    },
     {
       sign: {
         sub: user.id.toString(),

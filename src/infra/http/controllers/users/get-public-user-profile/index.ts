@@ -1,19 +1,20 @@
+import { BadRequestError } from "@/core/errors/bad-request-error"
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error"
-import { localeQuerySchema } from "@/i18n"
-import { getLanguage } from "@/i18n/get-language"
 import { makeGetUserProfileUseCase } from "@/infra/factories/make-get-user-profile-use-case"
-import { UserProfilePresenter } from "@/infra/http/presenters/user-profile-presenter"
+import { UserPublicProfilePresenter } from "@/infra/http/presenters/user-public-profile-presenter"
 import type { FastifyReply, FastifyRequest } from "fastify"
+import { z } from "zod"
 
-// [GET] /users/current?lang=
-export async function getUserProfileController(
+// [GET] /users/:username
+export async function getPublicUserProfileController(
   req: FastifyRequest,
   reply: FastifyReply
 ) {
-  const { lang } = localeQuerySchema.parse(req.query)
-  const dict = getLanguage(lang).shared
+  const getUserProfileParamsSchema = z.object({
+    username: z.string(),
+  })
 
-  const { username } = req.user
+  const { username } = getUserProfileParamsSchema.parse(req.params)
 
   const useCase = makeGetUserProfileUseCase()
   const result = await useCase.execute({ username })
@@ -24,18 +25,18 @@ export async function getUserProfileController(
     switch (err.constructor) {
       case ResourceNotFoundError: {
         return reply.status(404).send({
-          message: dict.errors.resourceNotFound,
+          message: err.message,
         })
       }
       default: {
         return reply.status(400).send({
-          message: dict.errors.badRequest,
+          message: new BadRequestError().message,
         })
       }
     }
   }
 
   return reply.status(200).send({
-    user: UserProfilePresenter.toHTTP(result.value.user),
+    user: UserPublicProfilePresenter.toHTTP(result.value.user),
   })
 }

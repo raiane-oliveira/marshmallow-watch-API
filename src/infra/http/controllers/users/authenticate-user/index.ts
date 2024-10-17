@@ -49,7 +49,9 @@ export async function authenticateUserController(
   const { user } = result.value
 
   const token = await reply.jwtSign(
-    {},
+    {
+      username: user.username.toString(),
+    },
     {
       sign: {
         sub: user.id.toString(),
@@ -58,7 +60,9 @@ export async function authenticateUserController(
   )
 
   const refreshToken = await reply.jwtSign(
-    {},
+    {
+      username: user.username.toString(),
+    },
     {
       sign: {
         sub: user.id.toString(),
