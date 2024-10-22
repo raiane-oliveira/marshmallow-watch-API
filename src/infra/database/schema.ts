@@ -1,6 +1,7 @@
 import { createId } from "@paralleldrive/cuid2"
 import { relations } from "drizzle-orm"
 import {
+  date,
   integer,
   pgTable,
   primaryKey,
@@ -28,6 +29,7 @@ export const users = pgTable("users", {
 export const userFavorites = pgTable("user_favorites", {
   id: serial("id").primaryKey(),
   tmdbMediaId: integer("tmdb_media_id").notNull(),
+  favoriteAt: timestamp("favorite_at", { withTimezone: true }),
   userId: text("user_id").references(() => users.id),
 })
 
@@ -43,6 +45,8 @@ export const playlists = pgTable("playlists", {
     .primaryKey()
     .$defaultFn(() => createId()),
   name: text("name").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }),
+  updatedAt: date("updated_at"),
   userId: text("user_id").references(() => users.id),
 })
 
