@@ -15,6 +15,13 @@
       "when": 1727714439983,
       "tag": "0001_little_black_bolt",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1729601560886,
+      "tag": "0002_eminent_slipstream",
+      "breakpoints": true
     }
   ]
 }

@@ -1,5 +1,13 @@
 import { createId } from "@paralleldrive/cuid2"
-import { pgTable, text, timestamp } from "drizzle-orm/pg-core"
+import { relations } from "drizzle-orm"
+import {
+  integer,
+  pgTable,
+  primaryKey,
+  serial,
+  text,
+  timestamp,
+} from "drizzle-orm/pg-core"
 
 export const users = pgTable("users", {
   id: text("id")
@@ -16,6 +24,48 @@ export const users = pgTable("users", {
     .notNull()
     .defaultNow(),
 })
+
+export const userFavorites = pgTable("user_favorites", {
+  id: serial("id").primaryKey(),
+  tmdbMediaId: integer("tmdb_media_id").notNull(),
+  userId: text("user_id").references(() => users.id),
+})
+
+export const userFavoritesRelations = relations(userFavorites, ({ one }) => ({
+  user: one(users, {
+    fields: [userFavorites.userId],
+    references: [users.id],
+  }),
+}))
+
+export const playlists = pgTable("playlists", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => createId()),
+  name: text("name").notNull(),
+  userId: text("user_id").references(() => users.id),
+})
+
+export const tmdbMediasInPlaylists = pgTable(
+  "tmdb_medias_in_playlists",
+  {
+    tmdbMediaId: integer("tmdb_media_id").notNull(),
+    playlistId: text("playlist_id")
+      .notNull()
+      .references(() => playlists.id),
+  },
+  t => ({
+    pk: primaryKey({ columns: [t.playlistId] }),
+  })
+)
+
+export const playlistsRelations = relations(playlists, ({ one, many }) => ({
+  user: one(users, {
+    fields: [playlists.userId],
+    references: [users.id],
+  }),
+  tmdbMedias: many(tmdbMediasInPlaylists),
+}))
 
 export type SelectUser = typeof users.$inferSelect
 export type InsertUser = typeof users.$inferInsert
