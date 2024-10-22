@@ -22,6 +22,13 @@
       "when": 1729601560886,
       "tag": "0002_eminent_slipstream",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1729601794832,
+      "tag": "0003_noisy_riptide",
+      "breakpoints": true
     }
   ]
 }
