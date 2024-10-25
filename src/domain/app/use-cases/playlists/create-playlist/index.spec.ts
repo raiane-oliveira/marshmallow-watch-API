@@ -1,7 +1,7 @@
 import { CreatePlaylistUseCase } from "."
 import { InMemoryUsersRepository } from "@/test/repositories/in-memory-users-repository"
 import { InMemoryPlaylistsRepository } from "@/test/repositories/in-memory-playlists-repository"
-import { makeUser } from "@/test/factories/make-user"
+import { makeUserAndPlaylists } from "@/test/factories/make-user-and-playlists"
 
 let usersRepository: InMemoryUsersRepository
 let playlistsRepository: InMemoryPlaylistsRepository
@@ -9,14 +9,14 @@ let sut: CreatePlaylistUseCase
 
 describe("Create Playlist Use Case", () => {
   beforeEach(() => {
-    usersRepository = new InMemoryUsersRepository()
     playlistsRepository = new InMemoryPlaylistsRepository()
+    usersRepository = new InMemoryUsersRepository(playlistsRepository)
     sut = new CreatePlaylistUseCase(playlistsRepository, usersRepository)
   })
 
   it("should be able to create a playlist", async () => {
-    const user = makeUser()
-    usersRepository.create(user)
+    const { user, playlists } = makeUserAndPlaylists()
+    usersRepository.createWithPlaylists(user, playlists)
 
     const result = await sut.execute({
       name: "Playlist 1",

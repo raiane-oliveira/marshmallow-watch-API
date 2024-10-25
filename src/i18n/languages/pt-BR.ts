@@ -4,6 +4,12 @@ export const ptBR = {
       badRequest: "Requisição mal feita",
       invalidUsername: "Nome de usuário inválido",
       resourceNotFound: "Recurso não encontrado",
+      playlistNotCreated: "Não foi possível deletar a(s) lista(s)",
+    },
+    playlists: {
+      watching: "Assistindo",
+      willWatch: "Vou assistir",
+      watched: "Assistido",
     },
   },
   requests: {

@@ -1,9 +1,13 @@
 import type { PaginationParams } from "@/core/pagination-params"
+import type { Playlist } from "@/domain/app/entities/playlist"
 import type { User } from "@/domain/app/entities/user"
 import type { UsersRepository } from "@/domain/app/repositories/users-repository"
+import type { InMemoryPlaylistsRepository } from "./in-memory-playlists-repository"
 
 export class InMemoryUsersRepository implements UsersRepository {
   items: User[] = []
+
+  constructor(private playlistsRepository?: InMemoryPlaylistsRepository) {}
 
   async findMany({ page }: PaginationParams) {
     const users = this.items.slice((page - 1) * 20, page * 20)
@@ -43,6 +47,11 @@ export class InMemoryUsersRepository implements UsersRepository {
 
   async create(user: User) {
     this.items.push(user)
+  }
+
+  async createWithPlaylists(user: User, playlists: Playlist[]) {
+    this.items.push(user)
+    this.playlistsRepository?.items.push(...playlists)
   }
 
   async update(user: User) {

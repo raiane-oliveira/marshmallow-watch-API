@@ -9,7 +9,6 @@ export function makeMovie(override?: Partial<MovieProps>, id?: UniqueEntityId) {
       imagePath: faker.image.avatar(),
       description: faker.person.bio(),
       genreIds: [],
-      addedAt: faker.date.recent(),
       releaseAt: faker.date.recent(),
       ...override,
     },

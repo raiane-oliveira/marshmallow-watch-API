@@ -29,6 +29,13 @@
       "when": 1729601794832,
       "tag": "0003_noisy_riptide",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1729606348881,
+      "tag": "0004_elite_riptide",
+      "breakpoints": true
     }
   ]
 }

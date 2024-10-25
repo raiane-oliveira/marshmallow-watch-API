@@ -4,7 +4,9 @@ import type { UsersRepository } from "@/domain/app/repositories/users-repository
 import { eq } from "drizzle-orm"
 import { db } from ".."
 import { DbUsersMapper } from "../mappers/db-users-mapper"
-import { users } from "../schema"
+import { users, playlists as playlistsTable } from "../schema"
+import type { Playlist } from "@/domain/app/entities/playlist"
+import { DbPlaylistsMapper } from "../mappers/db-playlists-mapper"
 
 export class DbUsersRepository implements UsersRepository {
   async findMany({ page }: PaginationParams) {
@@ -54,6 +56,20 @@ export class DbUsersRepository implements UsersRepository {
     const data = DbUsersMapper.toDatabase(user)
 
     await db.insert(users).values(data)
+  }
+
+  async createWithPlaylists(user: User, playlists: Playlist[]) {
+    const dataUser = DbUsersMapper.toDatabase(user)
+    const dataPlaylists = playlists.map(DbPlaylistsMapper.toDatabase)
+
+    await db.transaction(async tx => {
+      await tx.insert(users).values(dataUser)
+      await Promise.all(
+        dataPlaylists.map(data => {
+          return tx.insert(playlistsTable).values(data)
+        })
+      )
+    })
   }
 
   async update(user: User) {

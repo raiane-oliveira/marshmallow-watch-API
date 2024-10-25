@@ -17,7 +17,7 @@ export async function registerUserController(
 ) {
   const { lang } = localeQuerySchema.parse(req.query)
   const _dict = getLanguage(lang)
-  const sharedDictErrors = _dict.shared.errors
+  const { errors: sharedDictErrors } = _dict.shared
   const dict = _dict.requests.registerUser
 
   const registerUserBodySchema = z.object({
@@ -46,6 +46,7 @@ export async function registerUserController(
     username,
     email,
     password,
+    locale: lang,
   })
 
   if (result.isLeft()) {

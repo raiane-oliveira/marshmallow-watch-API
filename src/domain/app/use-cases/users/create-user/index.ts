@@ -1,22 +1,26 @@
 import { type Either, left, right } from "@/core/errors/either"
 import { InvalidUsernameError } from "@/core/errors/invalid-username-error"
 import type { HashGenerator } from "@/domain/app/cryptography/hash-generator"
+import { Playlist } from "@/domain/app/entities/playlist"
 import { User } from "@/domain/app/entities/user"
 import { Username } from "@/domain/app/entities/value-objects/username"
 import { UserAlreadyExistsError } from "@/domain/app/errors/user-already-exists-error"
 import type { UsersRepository } from "@/domain/app/repositories/users-repository"
+import { getLanguage } from "@/i18n/get-language"
 
 interface CreateUserUseCaseRequest {
   name: string
   username: string
   email: string
   password: string
+  locale: string
 }
 
 type CreateUserUseCaseResponse = Either<
   UserAlreadyExistsError | InvalidUsernameError,
   {
     user: User
+    playlists: Playlist[]
   }
 >
 
@@ -31,6 +35,7 @@ export class CreateUserUseCase {
     username,
     email,
     password,
+    locale,
   }: CreateUserUseCaseRequest): Promise<CreateUserUseCaseResponse> {
     if (!Username.isValid(username)) {
       return left(new InvalidUsernameError())
@@ -51,10 +56,31 @@ export class CreateUserUseCase {
       password: passwordHashed,
     })
 
-    await this.usersRepository.create(user)
+    const _dict = getLanguage(locale)
+    const { playlists: dictPlaylists } = _dict.shared
+
+    const willWatchPlaylist = Playlist.create({
+      name: dictPlaylists.willWatch,
+      userId: user.id,
+    })
+    const watchedPlaylist = Playlist.create({
+      name: dictPlaylists.watched,
+      userId: user.id,
+    })
+    const watchingPlaylist = Playlist.create({
+      name: dictPlaylists.watching,
+      userId: user.id,
+    })
+
+    await this.usersRepository.createWithPlaylists(user, [
+      willWatchPlaylist,
+      watchedPlaylist,
+      watchingPlaylist,
+    ])
 
     return right({
       user,
+      playlists: [willWatchPlaylist, watchedPlaylist, watchingPlaylist],
     })
   }
 }

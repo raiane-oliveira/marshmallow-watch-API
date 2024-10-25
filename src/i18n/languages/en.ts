@@ -4,6 +4,12 @@ export const en = {
       badRequest: "Bad Request",
       invalidUsername: "Invalid username",
       resourceNotFound: "Resource not found",
+      playlistNotCreated: "It was not possible to delete the playlist",
+    },
+    playlists: {
+      watching: "Watching",
+      willWatch: "I'll watch",
+      watched: "Watched",
     },
   },
   requests: {

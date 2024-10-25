@@ -30,7 +30,9 @@ export const userFavorites = pgTable("user_favorites", {
   id: serial("id").primaryKey(),
   tmdbMediaId: integer("tmdb_media_id").notNull(),
   favoriteAt: timestamp("favorite_at", { withTimezone: true }),
-  userId: text("user_id").references(() => users.id),
+  userId: text("user_id").references(() => users.id, {
+    onDelete: "cascade",
+  }),
 })
 
 export const userFavoritesRelations = relations(userFavorites, ({ one }) => ({
@@ -47,7 +49,9 @@ export const playlists = pgTable("playlists", {
   name: text("name").notNull(),
   createdAt: timestamp("created_at", { withTimezone: true }),
   updatedAt: date("updated_at"),
-  userId: text("user_id").references(() => users.id),
+  userId: text("user_id").references(() => users.id, {
+    onDelete: "cascade",
+  }),
 })
 
 export const tmdbMediasInPlaylists = pgTable(
@@ -56,20 +60,23 @@ export const tmdbMediasInPlaylists = pgTable(
     tmdbMediaId: integer("tmdb_media_id").notNull(),
     playlistId: text("playlist_id")
       .notNull()
-      .references(() => playlists.id),
+      .references(() => playlists.id, {
+        onDelete: "cascade",
+      }),
   },
   t => ({
     pk: primaryKey({ columns: [t.playlistId] }),
   })
 )
 
-export const playlistsRelations = relations(playlists, ({ one, many }) => ({
+export const playlistsRelations = relations(playlists, ({ one }) => ({
   user: one(users, {
     fields: [playlists.userId],
     references: [users.id],
   }),
-  tmdbMedias: many(tmdbMediasInPlaylists),
 }))
 
 export type SelectUser = typeof users.$inferSelect
 export type InsertUser = typeof users.$inferInsert
+export type InsertPlaylist = typeof playlists.$inferInsert
+export type SelectPlaylist = typeof playlists.$inferSelect
