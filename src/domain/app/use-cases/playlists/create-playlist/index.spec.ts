@@ -1,7 +1,7 @@
-import { CreatePlaylistUseCase } from "."
-import { InMemoryUsersRepository } from "@/test/repositories/in-memory-users-repository"
-import { InMemoryPlaylistsRepository } from "@/test/repositories/in-memory-playlists-repository"
 import { makeUserAndPlaylists } from "@/test/factories/make-user-and-playlists"
+import { InMemoryPlaylistsRepository } from "@/test/repositories/in-memory-playlists-repository"
+import { InMemoryUsersRepository } from "@/test/repositories/in-memory-users-repository"
+import { CreatePlaylistUseCase } from "."
 
 let usersRepository: InMemoryUsersRepository
 let playlistsRepository: InMemoryPlaylistsRepository
@@ -21,6 +21,7 @@ describe("Create Playlist Use Case", () => {
     const result = await sut.execute({
       name: "Playlist 1",
       userId: user.id.toString(),
+      visibility: "public",
     })
 
     expect(result.isRight()).toBe(true)

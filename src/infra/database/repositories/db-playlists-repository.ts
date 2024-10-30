@@ -29,12 +29,13 @@ export class DbPlaylistsRepository implements PlaylistsRepository {
       .select({
         id: playlists.id,
         name: playlists.name,
-        userId: playlists.userId,
-        createdAt: playlists.createdAt,
-        updatedAt: playlists.updatedAt,
+        visibility: playlists.visibility,
         mediaIds: sql<string[]>`
           JSON_AGG(${tmdbMediasInPlaylists.tmdbMediaId})
         `,
+        userId: playlists.userId,
+        createdAt: playlists.createdAt,
+        updatedAt: playlists.updatedAt,
       })
       .from(playlists)
       .leftJoin(

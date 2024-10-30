@@ -1,6 +1,7 @@
 import { Entity } from "@/core/entities/entity"
 import type { UniqueEntityId } from "@/core/entities/unique-entity-id"
 import type { Optional } from "@/core/types/optional"
+import type { Visibility } from "@/core/types/utils"
 
 export interface PlaylistProps {
   name: string
@@ -8,6 +9,7 @@ export interface PlaylistProps {
   updatedAt?: Date | null
   mediasId: string[]
   userId: UniqueEntityId
+  visibility: Visibility
 }
 
 export class Playlist extends Entity<PlaylistProps> {
@@ -29,6 +31,10 @@ export class Playlist extends Entity<PlaylistProps> {
 
   get userId() {
     return this.props.userId
+  }
+
+  get visibility() {
+    return this.props.visibility
   }
 
   static create(

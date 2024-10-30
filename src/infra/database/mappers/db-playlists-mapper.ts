@@ -1,15 +1,16 @@
+import { UniqueEntityId } from "@/core/entities/unique-entity-id"
 import { Playlist } from "@/domain/app/entities/playlist"
 import type { InsertPlaylist, SelectPlaylist } from "../schema"
-import { UniqueEntityId } from "@/core/entities/unique-entity-id"
 
 export class DbPlaylistsMapper {
   static toDatabase(raw: Playlist): InsertPlaylist {
     return {
       id: raw.id.toString(),
       name: raw.name,
+      visibility: raw.visibility,
+      userId: raw.userId.toString(),
       createdAt: raw.createdAt,
       updatedAt: raw.updatedAt?.toString(),
-      userId: raw.userId.toString(),
     }
   }
 
@@ -21,10 +22,11 @@ export class DbPlaylistsMapper {
     return Playlist.create(
       {
         name: raw.name,
-        createdAt: raw.createdAt,
-        updatedAt: raw.updatedAt ? new Date(raw.updatedAt) : null,
+        visibility: raw.visibility,
         userId: new UniqueEntityId(raw.userId),
         mediasId: raw.mediaIds,
+        createdAt: raw.createdAt,
+        updatedAt: raw.updatedAt ? new Date(raw.updatedAt) : null,
       },
       new UniqueEntityId(raw.id)
     )
