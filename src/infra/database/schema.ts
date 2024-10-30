@@ -3,6 +3,7 @@ import { relations } from "drizzle-orm"
 import {
   date,
   integer,
+  pgEnum,
   pgTable,
   serial,
   text,
@@ -41,18 +42,21 @@ export const userFavoritesRelations = relations(userFavorites, ({ one }) => ({
   }),
 }))
 
+export const visibilityEnum = pgEnum("visibility", ["public", "private"])
+
 export const playlists = pgTable("playlists", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => createId()),
   name: text("name").notNull(),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull(),
-  updatedAt: date("updated_at"),
+  visibility: visibilityEnum("visibility").notNull().default("public"),
   userId: text("user_id")
     .references(() => users.id, {
       onDelete: "cascade",
     })
     .notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull(),
+  updatedAt: date("updated_at"),
 })
 
 export const tmdbMediasInPlaylists = pgTable("tmdb_medias_in_playlists", {

@@ -1,8 +1,8 @@
 import type { TvShow } from "@/domain/app/entities/tv-show"
 import type {
   TvShowParamsFilters,
-  TvShowsRepository,
   TvShowSearchParams,
+  TvShowsRepository,
 } from "@/domain/app/repositories/tv-shows-repository"
 
 export class InMemoryTvShowsRepository implements TvShowsRepository {

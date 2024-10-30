@@ -1,6 +1,6 @@
 import type { PaginationParams } from "@/core/pagination-params"
-import type { User } from "../entities/user"
 import type { Playlist } from "../entities/playlist"
+import type { User } from "../entities/user"
 
 export interface UsersRepository {
   findMany(params: PaginationParams): Promise<User[]>

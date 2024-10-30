@@ -1,7 +1,7 @@
-import type { UserProps } from "@/domain/app/entities/user"
-import { makeUser } from "./make-user"
-import { makePlaylist } from "./make-playlist"
 import type { PlaylistProps } from "@/domain/app/entities/playlist"
+import type { UserProps } from "@/domain/app/entities/user"
+import { makePlaylist } from "./make-playlist"
+import { makeUser } from "./make-user"
 
 export function makeUserAndPlaylists(override?: {
   user: Partial<UserProps>

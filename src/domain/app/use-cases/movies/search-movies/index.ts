@@ -1,11 +1,11 @@
-import { right, type Either } from "@/core/errors/either"
+import { type Either, right } from "@/core/errors/either"
 import type { Movie } from "@/domain/app/entities/movie"
 import type {
   MovieSearchParams,
   MoviesRepository,
 } from "@/domain/app/repositories/movies-repository"
 
-interface SearchMoviesUseCaseRequest extends MovieSearchParams { }
+interface SearchMoviesUseCaseRequest extends MovieSearchParams {}
 
 type SearchMoviesUseCaseResponse = Either<
   null,
@@ -15,7 +15,7 @@ type SearchMoviesUseCaseResponse = Either<
 >
 
 export class SearchMoviesUseCase {
-  constructor(private moviesRepository: MoviesRepository) { }
+  constructor(private moviesRepository: MoviesRepository) {}
 
   async execute({
     page,

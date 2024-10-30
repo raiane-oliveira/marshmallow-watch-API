@@ -1,12 +1,12 @@
 import type { PaginationParams } from "@/core/pagination-params"
+import type { Playlist } from "@/domain/app/entities/playlist"
 import type { User } from "@/domain/app/entities/user"
 import type { UsersRepository } from "@/domain/app/repositories/users-repository"
 import { eq } from "drizzle-orm"
 import { db } from ".."
-import { DbUsersMapper } from "../mappers/db-users-mapper"
-import { users, playlists as playlistsTable } from "../schema"
-import type { Playlist } from "@/domain/app/entities/playlist"
 import { DbPlaylistsMapper } from "../mappers/db-playlists-mapper"
+import { DbUsersMapper } from "../mappers/db-users-mapper"
+import { playlists as playlistsTable, users } from "../schema"
 
 export class DbUsersRepository implements UsersRepository {
   async findMany({ page }: PaginationParams) {

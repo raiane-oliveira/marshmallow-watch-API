@@ -1,5 +1,5 @@
-import fastifyCors from "@fastify/cors"
 import fastifyCookie from "@fastify/cookie"
+import fastifyCors from "@fastify/cors"
 import fastifyJwt from "@fastify/jwt"
 import multipart from "@fastify/multipart"
 import fastify from "fastify"
@@ -7,11 +7,11 @@ import fastify from "fastify"
 import { ZodError } from "zod"
 import { env } from "./env"
 import { moviePublicRoutes } from "./http/controllers/movies/public-routes"
+import { playlistsRoutes } from "./http/controllers/playlists/routes"
 import { tvShowPublicRoutes } from "./http/controllers/tv-shows/public-routes"
 import { userPublicRoutes } from "./http/controllers/users/public-routes"
 import { userRoutes } from "./http/controllers/users/routes"
 import { verifyJWT } from "./http/middlewares/verify-jwt"
-import { playlistsRoutes } from "./http/controllers/playlists/routes"
 
 export const app = fastify()
 

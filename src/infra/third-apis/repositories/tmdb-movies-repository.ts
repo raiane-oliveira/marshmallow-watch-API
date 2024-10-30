@@ -1,3 +1,4 @@
+import { Movie } from "@/domain/app/entities/movie"
 import type {
   MovieParamsFilters,
   MovieSearchParams,
@@ -6,11 +7,11 @@ import type {
 import type { TmdbMovie } from "../interfaces/tmdb-movie"
 import { TmdbMoviesMapper } from "../mappers/tmdb-movies-mapper"
 import { TmdbApiProvider } from "../tmdb-api-provider"
-import { Movie } from "@/domain/app/entities/movie"
 
 export class TmdbMoviesRepository
   extends TmdbApiProvider
-  implements MoviesRepository {
+  implements MoviesRepository
+{
   async findManyByRelease({
     page,
     sortBy = "popularity.desc",

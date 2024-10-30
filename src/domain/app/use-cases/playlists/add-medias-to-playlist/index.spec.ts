@@ -1,10 +1,10 @@
-import { InMemoryPlaylistsRepository } from "@/test/repositories/in-memory-playlists-repository"
-import { AddMediasToPlaylistUseCase } from "."
-import { InMemoryUsersRepository } from "@/test/repositories/in-memory-users-repository"
-import { makeUser } from "@/test/factories/make-user"
-import { makePlaylist } from "@/test/factories/make-playlist"
-import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error"
 import { NotAllowedError } from "@/core/errors/not-allowed-error"
+import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error"
+import { makePlaylist } from "@/test/factories/make-playlist"
+import { makeUser } from "@/test/factories/make-user"
+import { InMemoryPlaylistsRepository } from "@/test/repositories/in-memory-playlists-repository"
+import { InMemoryUsersRepository } from "@/test/repositories/in-memory-users-repository"
+import { AddMediasToPlaylistUseCase } from "."
 
 let playlistsRepository: InMemoryPlaylistsRepository
 let usersRepository: InMemoryUsersRepository

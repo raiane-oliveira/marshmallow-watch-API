@@ -1,8 +1,8 @@
 import type { FastifyInstance } from "fastify"
 import { editUserController } from "./edit-user"
+import { getUserProfileController } from "./get-user-profile"
 import { uploadAvatarImageController } from "./upload-avatar-image"
 import { verifyAccountController } from "./verify-account"
-import { getUserProfileController } from "./get-user-profile"
 
 export async function userRoutes(app: FastifyInstance) {
   app.get("/users/current", getUserProfileController)

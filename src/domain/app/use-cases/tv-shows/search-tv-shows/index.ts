@@ -1,11 +1,11 @@
-import { right, type Either } from "@/core/errors/either"
+import { type Either, right } from "@/core/errors/either"
 import type { TvShow } from "@/domain/app/entities/tv-show"
 import type {
   TvShowSearchParams,
   TvShowsRepository,
 } from "@/domain/app/repositories/tv-shows-repository"
 
-interface SearchTvShowsUseCaseRequest extends TvShowSearchParams { }
+interface SearchTvShowsUseCaseRequest extends TvShowSearchParams {}
 
 type SearchTvShowsUseCaseResponse = Either<
   null,
@@ -15,7 +15,7 @@ type SearchTvShowsUseCaseResponse = Either<
 >
 
 export class SearchTvShowsUseCase {
-  constructor(private tvShowsRepository: TvShowsRepository) { }
+  constructor(private tvShowsRepository: TvShowsRepository) {}
 
   async execute({
     page,
