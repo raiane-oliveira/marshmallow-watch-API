@@ -2,12 +2,12 @@ import { NotAllowedError } from "@/core/errors/not-allowed-error"
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error"
 import { localeQuerySchema } from "@/i18n"
 import { getLanguage } from "@/i18n/get-language"
-import { makeAddMoviesToPlaylistsUseCase } from "@/infra/factories/make-add-movies-to-playlist-use-case"
+import { makeAddMediasToPlaylistsUseCase } from "@/infra/factories/make-add-medias-to-playlist-use-case"
 import type { FastifyReply, FastifyRequest } from "fastify"
 import { z } from "zod"
 
 // [POST] /playlists/:playlistId/add-medias
-export async function addMoviesToPlaylistController(
+export async function addMediasToPlaylistController(
   req: FastifyRequest,
   reply: FastifyReply
 ) {
@@ -15,7 +15,7 @@ export async function addMoviesToPlaylistController(
   const dict = getLanguage(lang).shared
 
   const addMoviesToPlaylistBodySchema = z.object({
-    tmdbMoviesId: z
+    tmdbMediasId: z
       .array(z.coerce.string({ required_error: dict.inputs.required }))
       .min(1, dict.inputs.required),
   })
@@ -23,14 +23,14 @@ export async function addMoviesToPlaylistController(
     playlistId: z.string({ required_error: dict.inputs.required }),
   })
 
-  const { tmdbMoviesId } = addMoviesToPlaylistBodySchema.parse(req.body)
+  const { tmdbMediasId } = addMoviesToPlaylistBodySchema.parse(req.body)
   const { playlistId } = addMoviesToPlaylistParamsSchema.parse(req.params)
 
-  const addMoviesToPlaylist = makeAddMoviesToPlaylistsUseCase()
+  const addMoviesToPlaylist = makeAddMediasToPlaylistsUseCase()
 
   const result = await addMoviesToPlaylist.execute({
     playlistId,
-    movieIds: tmdbMoviesId,
+    mediasId: tmdbMediasId,
     userId: req.user.sub,
   })
 

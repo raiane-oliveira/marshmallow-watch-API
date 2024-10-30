@@ -4,27 +4,27 @@ import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error"
 import type { Playlist } from "@/domain/app/entities/playlist"
 import type { PlaylistsRepository } from "@/domain/app/repositories/playlists-repository"
 
-interface AddMoviesToPlaylistUseCaseRequest {
-  movieIds: string[]
+interface AddMediasToPlaylistUseCaseRequest {
+  mediasId: string[]
   playlistId: string
   userId: string
 }
 
-type AddMoviesToPlaylistUseCaseResponse = Either<
+type AddMediasToPlaylistUseCaseResponse = Either<
   ResourceNotFoundError | NotAllowedError,
   {
     playlist: Playlist
   }
 >
 
-export class AddMoviesToPlaylistUseCase {
+export class AddMediasToPlaylistUseCase {
   constructor(private playlistsRepository: PlaylistsRepository) {}
 
   async execute({
-    movieIds,
+    mediasId,
     playlistId,
     userId,
-  }: AddMoviesToPlaylistUseCaseRequest): Promise<AddMoviesToPlaylistUseCaseResponse> {
+  }: AddMediasToPlaylistUseCaseRequest): Promise<AddMediasToPlaylistUseCaseResponse> {
     const playlist = await this.playlistsRepository.findById(playlistId)
 
     if (!playlist) {
@@ -37,7 +37,7 @@ export class AddMoviesToPlaylistUseCase {
 
     await this.playlistsRepository.updateMediasId(
       playlist.id.toString(),
-      movieIds
+      mediasId
     )
 
     return right({

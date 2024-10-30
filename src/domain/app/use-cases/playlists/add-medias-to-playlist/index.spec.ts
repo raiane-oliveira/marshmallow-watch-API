@@ -1,5 +1,5 @@
 import { InMemoryPlaylistsRepository } from "@/test/repositories/in-memory-playlists-repository"
-import { AddMoviesToPlaylistUseCase } from "."
+import { AddMediasToPlaylistUseCase } from "."
 import { InMemoryUsersRepository } from "@/test/repositories/in-memory-users-repository"
 import { makeUser } from "@/test/factories/make-user"
 import { makePlaylist } from "@/test/factories/make-playlist"
@@ -8,16 +8,16 @@ import { NotAllowedError } from "@/core/errors/not-allowed-error"
 
 let playlistsRepository: InMemoryPlaylistsRepository
 let usersRepository: InMemoryUsersRepository
-let sut: AddMoviesToPlaylistUseCase
+let sut: AddMediasToPlaylistUseCase
 
-describe("Add Movies to Playlist Use Case", () => {
+describe("Add Medias to Playlist Use Case", () => {
   beforeEach(() => {
     playlistsRepository = new InMemoryPlaylistsRepository()
     usersRepository = new InMemoryUsersRepository()
-    sut = new AddMoviesToPlaylistUseCase(playlistsRepository)
+    sut = new AddMediasToPlaylistUseCase(playlistsRepository)
   })
 
-  it("should be able to add movies to playlist", async () => {
+  it("should be able to add medias to playlist", async () => {
     const user = makeUser()
     usersRepository.create(user)
 
@@ -27,7 +27,7 @@ describe("Add Movies to Playlist Use Case", () => {
     playlistsRepository.create(playlist)
 
     const result = await sut.execute({
-      movieIds: ["1", "2", "3"],
+      mediasId: ["1", "2", "3"],
       playlistId: playlist.id.toString(),
       userId: user.id.toString(),
     })
@@ -46,12 +46,12 @@ describe("Add Movies to Playlist Use Case", () => {
     expect(playlistsRepository.items).toHaveLength(1)
   })
 
-  it("should not be able to add movies to inexistent playlist", async () => {
+  it("should not be able to add medias to inexistent playlist", async () => {
     const user = makeUser()
     usersRepository.create(user)
 
     const result = await sut.execute({
-      movieIds: ["1", "2", "3"],
+      mediasId: ["1", "2", "3"],
       playlistId: "inexistent-playlist-1",
       userId: user.id.toString(),
     })
@@ -65,7 +65,7 @@ describe("Add Movies to Playlist Use Case", () => {
     expect(playlistsRepository.items).toHaveLength(0)
   })
 
-  it("should not be able to add movies in another user's playlist", async () => {
+  it("should not be able to add medias in another user's playlist", async () => {
     const user = makeUser()
     const user2 = makeUser()
     usersRepository.create(user)
@@ -77,7 +77,7 @@ describe("Add Movies to Playlist Use Case", () => {
     playlistsRepository.create(playlist)
 
     const result = await sut.execute({
-      movieIds: ["1", "2", "3"],
+      mediasId: ["1", "2", "3"],
       playlistId: playlist.id.toString(),
       userId: user2.id.toString(),
     })
