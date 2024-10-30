@@ -35,8 +35,10 @@ export class AddMoviesToPlaylistUseCase {
       return left(new NotAllowedError())
     }
 
-    playlist.mediasId.push(...movieIds)
-    await this.playlistsRepository.updateMediasId(playlist)
+    await this.playlistsRepository.updateMediasId(
+      playlist.id.toString(),
+      movieIds
+    )
 
     return right({
       playlist,

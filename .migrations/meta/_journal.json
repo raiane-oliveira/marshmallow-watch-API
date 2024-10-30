@@ -43,6 +43,20 @@
       "when": 1729869547799,
       "tag": "0005_silky_spencer_smythe",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1730313108135,
+      "tag": "0006_jittery_khan",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1730314129542,
+      "tag": "0007_natural_luckman",
+      "breakpoints": true
     }
   ]
 }

@@ -13,11 +13,8 @@ export class DbPlaylistsRepository implements PlaylistsRepository {
     return playlist
   }
 
-  async updateMediasId(playlist: Playlist): Promise<Playlist> {
-    const playlistId = playlist.id.toString()
-    const mediasData = playlist.mediasId
-
-    const insertMediasQueries = mediasData.map(mediaId => {
+  async updateMediasId(playlistId: string, mediasId: string[]) {
+    const insertMediasQueries = mediasId.map(mediaId => {
       return db.insert(tmdbMediasInPlaylists).values({
         tmdbMediaId: Number(mediaId),
         playlistId,
@@ -25,8 +22,6 @@ export class DbPlaylistsRepository implements PlaylistsRepository {
     })
 
     await Promise.all(insertMediasQueries)
-
-    return playlist
   }
 
   async findById(id: string): Promise<null | Playlist> {
@@ -42,7 +37,7 @@ export class DbPlaylistsRepository implements PlaylistsRepository {
         `,
       })
       .from(playlists)
-      .innerJoin(
+      .leftJoin(
         tmdbMediasInPlaylists,
         eq(playlists.id, tmdbMediasInPlaylists.playlistId)
       )

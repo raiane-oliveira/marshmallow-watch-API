@@ -56,7 +56,8 @@ export const playlists = pgTable("playlists", {
 })
 
 export const tmdbMediasInPlaylists = pgTable("tmdb_medias_in_playlists", {
-  tmdbMediaId: integer("tmdb_media_id").notNull(),
+  id: serial("id").primaryKey(),
+  tmdbMediaId: integer("tmdb_media_id").notNull().unique(),
   playlistId: text("playlist_id")
     .notNull()
     .references(() => playlists.id, {

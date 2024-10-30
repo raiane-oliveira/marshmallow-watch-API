@@ -1,0 +1,1 @@
+ALTER TABLE "tmdb_medias_in_playlists" ADD COLUMN "id" serial PRIMARY KEY NOT NULL;

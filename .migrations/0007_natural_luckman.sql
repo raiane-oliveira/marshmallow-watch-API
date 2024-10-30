@@ -1,0 +1,1 @@
+ALTER TABLE "tmdb_medias_in_playlists" ADD CONSTRAINT "tmdb_medias_in_playlists_tmdb_media_id_unique" UNIQUE("tmdb_media_id");
