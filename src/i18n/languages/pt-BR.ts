@@ -5,11 +5,15 @@ export const ptBR = {
       invalidUsername: "Nome de usuário inválido",
       resourceNotFound: "Recurso não encontrado",
       playlistNotCreated: "Não foi possível deletar a(s) lista(s)",
+      notAllowed: "Não permitido",
     },
     playlists: {
       watching: "Assistindo",
       willWatch: "Vou assistir",
       watched: "Assistido",
+    },
+    inputs: {
+      required: "Obrigatório",
     },
   },
   requests: {

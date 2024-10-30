@@ -10,6 +10,7 @@ export function makePlaylist(
     {
       name: faker.person.fullName(),
       userId: new UniqueEntityId(),
+      mediasId: [],
       ...override,
     },
     id

@@ -4,7 +4,6 @@ import {
   date,
   integer,
   pgTable,
-  primaryKey,
   serial,
   text,
   timestamp,
@@ -47,27 +46,23 @@ export const playlists = pgTable("playlists", {
     .primaryKey()
     .$defaultFn(() => createId()),
   name: text("name").notNull(),
-  createdAt: timestamp("created_at", { withTimezone: true }),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull(),
   updatedAt: date("updated_at"),
-  userId: text("user_id").references(() => users.id, {
-    onDelete: "cascade",
-  }),
+  userId: text("user_id")
+    .references(() => users.id, {
+      onDelete: "cascade",
+    })
+    .notNull(),
 })
 
-export const tmdbMediasInPlaylists = pgTable(
-  "tmdb_medias_in_playlists",
-  {
-    tmdbMediaId: integer("tmdb_media_id").notNull(),
-    playlistId: text("playlist_id")
-      .notNull()
-      .references(() => playlists.id, {
-        onDelete: "cascade",
-      }),
-  },
-  t => ({
-    pk: primaryKey({ columns: [t.playlistId] }),
-  })
-)
+export const tmdbMediasInPlaylists = pgTable("tmdb_medias_in_playlists", {
+  tmdbMediaId: integer("tmdb_media_id").notNull(),
+  playlistId: text("playlist_id")
+    .notNull()
+    .references(() => playlists.id, {
+      onDelete: "cascade",
+    }),
+})
 
 export const playlistsRelations = relations(playlists, ({ one }) => ({
   user: one(users, {
@@ -75,6 +70,16 @@ export const playlistsRelations = relations(playlists, ({ one }) => ({
     references: [users.id],
   }),
 }))
+
+export const tmdbMediasInPlaylistsRelations = relations(
+  tmdbMediasInPlaylists,
+  ({ one }) => ({
+    playlist: one(playlists, {
+      fields: [tmdbMediasInPlaylists.playlistId],
+      references: [playlists.id],
+    }),
+  })
+)
 
 export type SelectUser = typeof users.$inferSelect
 export type InsertUser = typeof users.$inferInsert

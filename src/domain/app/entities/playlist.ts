@@ -6,6 +6,7 @@ export interface PlaylistProps {
   name: string
   createdAt: Date
   updatedAt?: Date | null
+  mediasId: string[]
   userId: UniqueEntityId
 }
 
@@ -20,6 +21,10 @@ export class Playlist extends Entity<PlaylistProps> {
 
   get updatedAt() {
     return this.props.updatedAt
+  }
+
+  get mediasId() {
+    return this.props.mediasId
   }
 
   get userId() {

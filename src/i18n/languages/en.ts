@@ -5,11 +5,15 @@ export const en = {
       invalidUsername: "Invalid username",
       resourceNotFound: "Resource not found",
       playlistNotCreated: "It was not possible to delete the playlist",
+      notAllowed: "Not allowed",
     },
     playlists: {
       watching: "Watching",
       willWatch: "I'll watch",
       watched: "Watched",
+    },
+    inputs: {
+      required: "Required",
     },
   },
   requests: {

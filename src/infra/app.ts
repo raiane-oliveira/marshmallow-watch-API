@@ -11,6 +11,7 @@ import { tvShowPublicRoutes } from "./http/controllers/tv-shows/public-routes"
 import { userPublicRoutes } from "./http/controllers/users/public-routes"
 import { userRoutes } from "./http/controllers/users/routes"
 import { verifyJWT } from "./http/middlewares/verify-jwt"
+import { playlistsRoutes } from "./http/controllers/playlists/routes"
 
 export const app = fastify()
 
@@ -34,6 +35,7 @@ app.register(multipart)
 
 app.addHook("preHandler", verifyJWT)
 
+app.register(playlistsRoutes)
 app.register(tvShowPublicRoutes)
 app.register(moviePublicRoutes)
 app.register(userRoutes)
