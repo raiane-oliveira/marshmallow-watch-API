@@ -12,6 +12,7 @@ export class TmdbMoviesMapper {
           genre => new UniqueEntityId(genre.toString())
         ),
         imagePath: raw.backdrop_path,
+        popularity: raw.popularity,
         releaseAt: new Date(raw.release_date),
       },
       new UniqueEntityId(raw.id.toString())

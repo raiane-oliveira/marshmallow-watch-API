@@ -1,31 +1,11 @@
-import { Entity } from "@/core/entities/entity"
 import type { UniqueEntityId } from "@/core/entities/unique-entity-id"
+import { Media, type MediaProps } from "./media"
 
-export interface MovieProps {
-  title: string
-  description: string
-  imagePath?: string
-  genreIds: UniqueEntityId[]
+export interface MovieProps extends MediaProps {
   releaseAt: Date | null
 }
 
-export class Movie extends Entity<MovieProps> {
-  get title() {
-    return this.props.title
-  }
-
-  get description() {
-    return this.props.description
-  }
-
-  get imagePath() {
-    return this.props.imagePath
-  }
-
-  get genreIds() {
-    return this.props.genreIds
-  }
-
+export class Movie extends Media<MovieProps> {
   get releaseAt() {
     return this.props.releaseAt
   }

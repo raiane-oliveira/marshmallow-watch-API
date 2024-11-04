@@ -1,31 +1,11 @@
-import { Entity } from "@/core/entities/entity"
 import type { UniqueEntityId } from "@/core/entities/unique-entity-id"
+import { Media, type MediaProps } from "./media"
 
-export interface TvShowProps {
-  title: string
-  description: string
-  imagePath?: string
-  genreIds: UniqueEntityId[]
+export interface TvShowProps extends MediaProps {
   firstAirDate: Date
 }
 
-export class TvShow extends Entity<TvShowProps> {
-  get title() {
-    return this.props.title
-  }
-
-  get description() {
-    return this.props.description
-  }
-
-  get imagePath() {
-    return this.props.imagePath
-  }
-
-  get genreIds() {
-    return this.props.genreIds
-  }
-
+export class TvShow extends Media<TvShowProps> {
   get firstAirDate() {
     return this.props.firstAirDate
   }

@@ -11,7 +11,8 @@ export class TmdbTvShowsMapper {
         genreIds: raw.genre_ids.map(
           genre => new UniqueEntityId(genre.toString())
         ),
-        imagePath: raw.poster_path,
+        imagePath: raw.backdrop_path ?? raw.poster_path,
+        popularity: raw.popularity,
         firstAirDate: new Date(raw.first_air_date),
       },
       new UniqueEntityId(raw.id.toString())
