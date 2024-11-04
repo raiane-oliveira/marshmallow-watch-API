@@ -11,6 +11,7 @@ export function makePlaylist(
       name: faker.person.fullName(),
       userId: new UniqueEntityId(),
       mediasId: [],
+      visibility: "public",
       ...override,
     },
     id

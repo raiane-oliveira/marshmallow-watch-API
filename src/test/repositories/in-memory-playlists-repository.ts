@@ -18,7 +18,8 @@ export class InMemoryPlaylistsRepository implements PlaylistsRepository {
       throw new Error(`Playlist '${playlistId}' does not exist!`)
     }
 
-    this.items[playlistIndex].mediasId.concat(mediasId)
+    const playlist = this.items[playlistIndex]
+    this.items[playlistIndex].mediasId = playlist.mediasId.concat(mediasId)
   }
 
   async findById(id: string): Promise<null | Playlist> {

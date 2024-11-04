@@ -29,6 +29,10 @@ export class Playlist extends Entity<PlaylistProps> {
     return this.props.mediasId
   }
 
+  set mediasId(value) {
+    this.props.mediasId = value
+  }
+
   get userId() {
     return this.props.userId
   }
