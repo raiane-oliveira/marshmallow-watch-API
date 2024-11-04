@@ -7,7 +7,7 @@ export abstract class TvShowPresenter {
       title: tvShow.title,
       description: tvShow.description,
       genreIds: tvShow.genreIds.map(id => id.toString()),
-      imageUrl: `https://image.tmdb.org/t/p${tvShow.imagePath}`,
+      imageUrl: `https://image.tmdb.org/t/p/original${tvShow.imagePath}`,
       firstAirDate: tvShow.firstAirDate,
     }
   }

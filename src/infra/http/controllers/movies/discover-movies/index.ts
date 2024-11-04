@@ -4,22 +4,25 @@ import { MoviePresenter } from "@/infra/http/presenters/movie-presenter"
 import type { FastifyReply, FastifyRequest } from "fastify"
 import { z } from "zod"
 
-// [GET] /discover/movies?page=1&orderBy=popularity.desc
+// [GET] /discover/movies?page=1
 export async function discoverMoviesController(
   req: FastifyRequest,
   reply: FastifyReply
 ) {
   const discoverMoviesQuerySchema = z.object({
     page: z.coerce.number().optional().default(1),
-    orderBy: z.string().optional(),
+    sortBy: z.string().optional(),
+    lang: z.string().optional().default("en"),
   })
 
-  const { page } = discoverMoviesQuerySchema.parse(req.query)
+  const { page, lang, sortBy } = discoverMoviesQuerySchema.parse(req.query)
 
   const discoverMoviesUseCase = makeDiscoverMoviesUseCase()
 
   const result = await discoverMoviesUseCase.execute({
     page,
+    sortBy,
+    lang,
   })
 
   if (result.isLeft()) {

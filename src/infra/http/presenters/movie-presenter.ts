@@ -7,7 +7,7 @@ export class MoviePresenter {
       title: movie.title,
       description: movie.description,
       genreIds: movie.genreIds.map(id => id.toString()),
-      imageUrl: `https://image.tmdb.org/t/p${movie.imagePath}`,
+      imageUrl: `https://image.tmdb.org/t/p/original/${movie.imagePath}`,
       releaseAt: movie.releaseAt,
     }
   }

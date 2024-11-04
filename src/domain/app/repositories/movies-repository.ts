@@ -1,7 +1,9 @@
 import type { PaginationParams } from "@/core/pagination-params"
 import type { Movie } from "../entities/movie"
+import type { Locale } from "@/i18n"
 
 export interface MovieParamsFilters extends PaginationParams {
+  lang?: Locale | string
   sortBy?:
     | "popularity.desc"
     | "popularity.asc"
@@ -9,6 +11,7 @@ export interface MovieParamsFilters extends PaginationParams {
     | "release.desc"
     | "title.asc"
     | "title.desc"
+    | string
 }
 
 export interface MovieSearchParams extends PaginationParams {

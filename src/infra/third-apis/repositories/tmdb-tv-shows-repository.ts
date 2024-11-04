@@ -14,9 +14,10 @@ export class TmdbTvShowsRepository
   async findManyByRelease({
     page,
     sortBy = "popularity.desc",
+    lang,
   }: TvShowParamsFilters) {
     const response = await this.api(
-      `/3/discover/tv?page=${page}&sort_by=${sortBy}`
+      `/3/discover/tv?page=${page}&sort_by=${sortBy}&language=${lang ?? "en-US"}`
     )
     const tmdbTvShows = await response.json()
 

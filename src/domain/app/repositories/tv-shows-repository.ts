@@ -1,7 +1,9 @@
 import type { PaginationParams } from "@/core/pagination-params"
 import type { TvShow } from "../entities/tv-show"
+import type { Locale } from "@/i18n"
 
 export interface TvShowParamsFilters extends PaginationParams {
+  lang?: Locale | string
   sortBy?:
     | "popularity.desc"
     | "popularity.asc"
@@ -9,6 +11,7 @@ export interface TvShowParamsFilters extends PaginationParams {
     | "release.desc"
     | "title.asc"
     | "title.desc"
+    | string
 }
 
 export interface TvShowSearchParams extends PaginationParams {

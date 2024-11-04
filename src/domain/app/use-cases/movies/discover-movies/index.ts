@@ -20,10 +20,12 @@ export class DiscoverMoviesUseCase {
   async execute({
     page,
     sortBy,
+    lang,
   }: DiscoverMoviesUseCaseRequest): Promise<DiscoverMoviesUseCaseResponse> {
     const movies = await this.moviesRepository.findManyByRelease({
       page,
       sortBy,
+      lang,
     })
 
     return right({

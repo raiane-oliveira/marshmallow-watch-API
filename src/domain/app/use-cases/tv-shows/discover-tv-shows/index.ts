@@ -20,10 +20,12 @@ export class DiscoverTvShowsUseCase {
   async execute({
     page,
     sortBy,
+    lang,
   }: DiscoverTvShowsUseCaseRequest): Promise<DiscoverTvShowsUseCaseResponse> {
     const tvShows = await this.tvShowsRepository.findManyByRelease({
       page,
       sortBy,
+      lang,
     })
 
     return right({

@@ -15,9 +15,10 @@ export class TmdbMoviesRepository
   async findManyByRelease({
     page,
     sortBy = "popularity.desc",
+    lang,
   }: MovieParamsFilters) {
     const response = await this.api(
-      `/3/discover/movie?page=${page}&sort_by=${sortBy}`
+      `/3/discover/movie?page=${page}&sort_by=${sortBy}&language=${lang ?? "en-US"}`
     )
     const tmdbMovies = await response.json()
 
