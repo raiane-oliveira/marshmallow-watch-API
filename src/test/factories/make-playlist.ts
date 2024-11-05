@@ -12,6 +12,7 @@ export function makePlaylist(
       userId: new UniqueEntityId(),
       mediasId: [],
       visibility: "public",
+      color: faker.internet.color(),
       ...override,
     },
     id

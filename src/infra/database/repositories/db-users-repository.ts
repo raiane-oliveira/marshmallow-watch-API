@@ -36,6 +36,7 @@ export class DbUsersRepository implements UsersRepository {
           mediaIds: sql<string[]>`
           JSON_AGG(${tmdbMediasInPlaylists.tmdbMediaId}) AS "mediaIds"
         `,
+          color: playlists.color,
           userId: playlists.userId,
           createdAt: playlists.createdAt,
           updatedAt: playlists.updatedAt,

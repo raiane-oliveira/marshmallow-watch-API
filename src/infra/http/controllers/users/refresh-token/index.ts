@@ -7,7 +7,9 @@ export async function refreshTokenController(
   await req.jwtVerify({ onlyCookie: true })
 
   const token = await reply.jwtSign(
-    {},
+    {
+      username: req.user.username,
+    },
     {
       sign: {
         sub: req.user.sub,
@@ -16,7 +18,9 @@ export async function refreshTokenController(
   )
 
   const refreshToken = await reply.jwtSign(
-    {},
+    {
+      username: req.user.username,
+    },
     {
       sign: {
         sub: req.user.sub,

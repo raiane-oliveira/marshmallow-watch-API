@@ -50,6 +50,7 @@ export const playlists = pgTable("playlists", {
     .$defaultFn(() => createId()),
   name: text("name").notNull(),
   visibility: visibilityEnum("visibility").notNull().default("public"),
+  color: text("color").notNull(),
   userId: text("user_id")
     .references(() => users.id, {
       onDelete: "cascade",

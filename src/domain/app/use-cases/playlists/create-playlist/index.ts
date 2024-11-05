@@ -9,6 +9,7 @@ import type { UsersRepository } from "@/domain/app/repositories/users-repository
 interface CreatePlaylistUseCaseRequest {
   name: string
   userId: string
+  color: string
   visibility: Visibility
 }
 
@@ -28,6 +29,7 @@ export class CreatePlaylistUseCase {
   async execute({
     name,
     userId,
+    color,
     visibility,
   }: CreatePlaylistUseCaseRequest): Promise<CreatePlaylistUseCaseResponse> {
     const user = await this.usersRepository.findById(userId)
@@ -41,6 +43,7 @@ export class CreatePlaylistUseCase {
         name,
         userId: new UniqueEntityId(userId),
         visibility,
+        color,
         mediasId: [],
       })
     )

@@ -15,16 +15,18 @@ export async function createPlaylistController(
 
   const createPlaylistBodySchema = z.object({
     name: z.string({ required_error: dict.inputs.required }),
+    color: z.string({ required_error: dict.inputs.required }),
     visibility: z.enum(["public", "private"]).optional().default("public"),
   })
 
-  const { name, visibility } = createPlaylistBodySchema.parse(req.body)
+  const { name, visibility, color } = createPlaylistBodySchema.parse(req.body)
 
   const createPlaylist = makeCreatePlaylistUseCase()
 
   const result = await createPlaylist.execute({
     name,
     visibility,
+    color,
     userId: req.user.sub,
   })
 

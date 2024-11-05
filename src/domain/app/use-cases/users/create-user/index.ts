@@ -6,14 +6,12 @@ import { User } from "@/domain/app/entities/user"
 import { Username } from "@/domain/app/entities/value-objects/username"
 import { UserAlreadyExistsError } from "@/domain/app/errors/user-already-exists-error"
 import type { UsersRepository } from "@/domain/app/repositories/users-repository"
-import { getLanguage } from "@/i18n/get-language"
 
 interface CreateUserUseCaseRequest {
   name: string
   username: string
   email: string
   password: string
-  locale: string
 }
 
 type CreateUserUseCaseResponse = Either<
@@ -35,7 +33,6 @@ export class CreateUserUseCase {
     username,
     email,
     password,
-    locale,
   }: CreateUserUseCaseRequest): Promise<CreateUserUseCaseResponse> {
     if (!Username.isValid(username)) {
       return left(new InvalidUsernameError())
@@ -56,20 +53,26 @@ export class CreateUserUseCase {
       password: passwordHashed,
     })
 
-    const _dict = getLanguage(locale)
-    const { playlists: dictPlaylists } = _dict.shared
-
     const willWatchPlaylist = Playlist.create({
-      name: dictPlaylists.willWatch,
+      name: "willWatch",
       userId: user.id,
+      color: "#BAE1FF",
+      mediasId: [],
+      visibility: "private",
     })
     const watchedPlaylist = Playlist.create({
-      name: dictPlaylists.watched,
+      name: "watched",
       userId: user.id,
+      color: "#FFB3BA",
+      mediasId: [],
+      visibility: "private",
     })
     const watchingPlaylist = Playlist.create({
-      name: dictPlaylists.watching,
+      name: "watching",
       userId: user.id,
+      color: "#FFFFBA",
+      mediasId: [],
+      visibility: "private",
     })
 
     await this.usersRepository.createWithPlaylists(user, [

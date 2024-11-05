@@ -46,7 +46,6 @@ export async function registerUserController(
     username,
     email,
     password,
-    locale: lang,
   })
 
   if (result.isLeft()) {
@@ -85,7 +84,9 @@ export async function registerUserController(
   )
 
   const refreshToken = await reply.jwtSign(
-    {},
+    {
+      username: user.username.toString(),
+    },
     {
       sign: {
         sub: user.id.toString(),

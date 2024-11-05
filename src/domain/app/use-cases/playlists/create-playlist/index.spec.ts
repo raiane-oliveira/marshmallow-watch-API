@@ -21,6 +21,7 @@ describe("Create Playlist Use Case", () => {
     const result = await sut.execute({
       name: "Playlist 1",
       userId: user.id.toString(),
+      color: "#ff3b2a",
       visibility: "public",
     })
 

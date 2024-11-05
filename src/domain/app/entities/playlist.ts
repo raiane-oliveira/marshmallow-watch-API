@@ -9,6 +9,7 @@ export interface PlaylistProps {
   updatedAt?: Date | null
   mediasId: string[]
   userId: UniqueEntityId
+  color: string
   visibility: Visibility
 }
 
@@ -35,6 +36,10 @@ export class Playlist extends Entity<PlaylistProps> {
 
   get userId() {
     return this.props.userId
+  }
+
+  get color() {
+    return this.props.color
   }
 
   get visibility() {

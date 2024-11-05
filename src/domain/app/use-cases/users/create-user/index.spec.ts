@@ -24,7 +24,6 @@ describe("Create User Use Case", () => {
       username: "johndoe",
       email: "johndoe@example.com",
       password: "123456",
-      locale: "en",
     })
 
     expect(result.isRight()).toBe(true)
@@ -47,7 +46,6 @@ describe("Create User Use Case", () => {
       username: "johndoe",
       email: "johndoe@example.com",
       password: "123456",
-      locale: "en",
     })
 
     const result = await sut.execute({
@@ -55,7 +53,6 @@ describe("Create User Use Case", () => {
       username: "johndoe",
       email: "johndoe@example.com",
       password: "123456",
-      locale: "en",
     })
 
     expect(result.isLeft()).toBe(true)
@@ -73,7 +70,6 @@ describe("Create User Use Case", () => {
       username: "johndoe",
       email: "johndoe@example.com",
       password: "123456",
-      locale: "en",
     })
 
     expect(result.isRight()).toEqual(true)
@@ -89,7 +85,6 @@ describe("Create User Use Case", () => {
       username: "john doe23$_%",
       email: "johndoe@example.com",
       password: "123456",
-      locale: "en",
     })
 
     expect(result.isLeft()).toBe(true)

@@ -33,6 +33,7 @@ export class DbPlaylistsRepository implements PlaylistsRepository {
         mediaIds: sql<string[]>`
           JSON_AGG(${tmdbMediasInPlaylists.tmdbMediaId})
         `,
+        color: playlists.color,
         userId: playlists.userId,
         createdAt: playlists.createdAt,
         updatedAt: playlists.updatedAt,

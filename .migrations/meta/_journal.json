@@ -64,6 +64,13 @@
       "when": 1730317329169,
       "tag": "0008_skinny_groot",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1730834386803,
+      "tag": "0009_wonderful_silvermane",
+      "breakpoints": true
     }
   ]
 }
