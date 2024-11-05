@@ -47,6 +47,7 @@ export class DbUsersRepository implements UsersRepository {
           eq(playlists.id, tmdbMediasInPlaylists.playlistId)
         )
         .groupBy(playlists.id)
+        .limit(20)
     )
 
     const userWithPlaylists = await db
