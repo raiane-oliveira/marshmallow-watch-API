@@ -22,7 +22,7 @@ export class DiscoverMoviesUseCase {
     sortBy,
     lang,
   }: DiscoverMoviesUseCaseRequest): Promise<DiscoverMoviesUseCaseResponse> {
-    const movies = await this.moviesRepository.findManyByRelease({
+    const movies = await this.moviesRepository.findManyByFilter({
       page,
       sortBy,
       lang,

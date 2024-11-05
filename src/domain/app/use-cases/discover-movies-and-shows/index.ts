@@ -32,12 +32,12 @@ export class DiscoverMoviesAndShowsUseCase {
     sortBy,
   }: DiscoverMoviesAndShowsUseCaseRequest): Promise<DiscoverMoviesAndShowsUseCaseResponse> {
     const [moviesRes, tvShowsRes] = await Promise.all([
-      this.moviesRepository.findManyByRelease({
+      this.moviesRepository.findManyByFilter({
         lang,
         sortBy,
         page,
       }),
-      this.tvShowsRepository.findManyByRelease({
+      this.tvShowsRepository.findManyByFilter({
         lang,
         sortBy,
         page,

@@ -3,15 +3,26 @@ import type {
   MovieParamsFilters,
   MovieSearchParams,
   MoviesRepository,
+  MovieUpcomingParams,
 } from "@/domain/app/repositories/movies-repository"
+import dayjs from "dayjs"
 
 export class InMemoryMoviesRepository implements MoviesRepository {
   items: Movie[] = []
 
-  async findManyByRelease({ page }: MovieParamsFilters) {
+  async findManyByFilter({ page }: MovieParamsFilters) {
     const movies = this.items.slice((page - 1) * 20, page * 20)
 
     return movies
+  }
+
+  async findManyByUpcoming({ page }: MovieUpcomingParams) {
+    const movies = this.items.slice((page - 1) * 20, page * 20)
+    const upcomingMovies = movies.filter(movie =>
+      dayjs(movie.releaseAt).isAfter(new Date())
+    )
+
+    return upcomingMovies
   }
 
   async search({ query, year, page }: MovieSearchParams) {

@@ -3,6 +3,7 @@ import type {
   MovieParamsFilters,
   MovieSearchParams,
   MoviesRepository,
+  MovieUpcomingParams,
 } from "@/domain/app/repositories/movies-repository"
 import type { TmdbMovie } from "../interfaces/tmdb-movie"
 import { TmdbMoviesMapper } from "../mappers/tmdb-movies-mapper"
@@ -12,7 +13,18 @@ export class TmdbMoviesRepository
   extends TmdbApiProvider
   implements MoviesRepository
 {
-  async findManyByRelease({
+  async findManyByUpcoming({ page, lang }: MovieUpcomingParams) {
+    const response = await this.api(
+      `/3/movie/upcoming?page=${page}&language=${lang ?? "en-US"}`
+    )
+    const tmdbMovies = await response.json()
+
+    return tmdbMovies.results?.map((tmdbMovie: TmdbMovie) => {
+      return TmdbMoviesMapper.toDomain(tmdbMovie)
+    })
+  }
+
+  async findManyByFilter({
     page,
     sortBy = "popularity.desc",
     lang,

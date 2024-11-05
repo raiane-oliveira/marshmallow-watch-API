@@ -11,7 +11,7 @@ export class TmdbTvShowsRepository
   extends TmdbApiProvider
   implements TvShowsRepository
 {
-  async findManyByRelease({
+  async findManyByFilter({
     page,
     sortBy = "popularity.desc",
     lang,

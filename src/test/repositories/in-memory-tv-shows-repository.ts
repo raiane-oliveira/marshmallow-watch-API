@@ -8,7 +8,7 @@ import type {
 export class InMemoryTvShowsRepository implements TvShowsRepository {
   items: TvShow[] = []
 
-  async findManyByRelease({ page }: TvShowParamsFilters) {
+  async findManyByFilter({ page }: TvShowParamsFilters) {
     const tvShows = this.items.slice((page - 1) * 20, page * 20)
 
     return tvShows

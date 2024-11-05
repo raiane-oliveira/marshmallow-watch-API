@@ -21,6 +21,6 @@ export interface TvShowSearchParams extends PaginationParams {
 }
 
 export interface TvShowsRepository {
-  findManyByRelease(params: TvShowParamsFilters): Promise<TvShow[]>
+  findManyByFilter(params: TvShowParamsFilters): Promise<TvShow[]>
   search(params: TvShowSearchParams): Promise<TvShow[]>
 }

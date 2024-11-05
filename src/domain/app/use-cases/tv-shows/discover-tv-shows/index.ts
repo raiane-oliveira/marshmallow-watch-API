@@ -22,7 +22,7 @@ export class DiscoverTvShowsUseCase {
     sortBy,
     lang,
   }: DiscoverTvShowsUseCaseRequest): Promise<DiscoverTvShowsUseCaseResponse> {
-    const tvShows = await this.tvShowsRepository.findManyByRelease({
+    const tvShows = await this.tvShowsRepository.findManyByFilter({
       page,
       sortBy,
       lang,

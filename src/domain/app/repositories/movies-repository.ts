@@ -20,7 +20,12 @@ export interface MovieSearchParams extends PaginationParams {
   year?: number
 }
 
+export interface MovieUpcomingParams extends PaginationParams {
+  lang?: Locale | string
+}
+
 export interface MoviesRepository {
-  findManyByRelease(params: MovieParamsFilters): Promise<Movie[]>
+  findManyByFilter(params: MovieParamsFilters): Promise<Movie[]>
+  findManyByUpcoming(params: MovieUpcomingParams): Promise<Movie[]>
   search(params: MovieSearchParams): Promise<Movie[]>
 }
