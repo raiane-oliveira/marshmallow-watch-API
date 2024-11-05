@@ -1,4 +1,3 @@
-import { Movie } from "@/domain/app/entities/movie"
 import type {
   MovieParamsFilters,
   MovieSearchParams,
@@ -28,9 +27,11 @@ export class TmdbMoviesRepository
     page,
     sortBy = "popularity.desc",
     lang,
+    releaseDateGte,
+    releaseDateLte,
   }: MovieParamsFilters) {
     const response = await this.api(
-      `/3/discover/movie?page=${page}&sort_by=${sortBy}&language=${lang ?? "en-US"}`
+      `/3/discover/movie?page=${page}&primary_release_date.gte=${releaseDateGte}&primary_release_date.lte=${releaseDateLte}&sort_by=${sortBy}&language=${lang ?? "en-US"}&include_adult=false`
     )
     const tmdbMovies = await response.json()
 

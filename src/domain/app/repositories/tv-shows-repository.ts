@@ -12,6 +12,8 @@ export interface TvShowParamsFilters extends PaginationParams {
     | "title.asc"
     | "title.desc"
     | string
+  firstAirDateGte?: string
+  firstAirDateLte?: string
 }
 
 export interface TvShowSearchParams extends PaginationParams {

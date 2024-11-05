@@ -17,16 +17,10 @@ type DiscoverMoviesUseCaseResponse = Either<
 export class DiscoverMoviesUseCase {
   constructor(private moviesRepository: MoviesRepository) {}
 
-  async execute({
-    page,
-    sortBy,
-    lang,
-  }: DiscoverMoviesUseCaseRequest): Promise<DiscoverMoviesUseCaseResponse> {
-    const movies = await this.moviesRepository.findManyByFilter({
-      page,
-      sortBy,
-      lang,
-    })
+  async execute(
+    props: DiscoverMoviesUseCaseRequest
+  ): Promise<DiscoverMoviesUseCaseResponse> {
+    const movies = await this.moviesRepository.findManyByFilter(props)
 
     return right({
       movies,

@@ -12,6 +12,8 @@ export interface MovieParamsFilters extends PaginationParams {
     | "title.asc"
     | "title.desc"
     | string
+  releaseDateGte?: string
+  releaseDateLte?: string
 }
 
 export interface MovieSearchParams extends PaginationParams {

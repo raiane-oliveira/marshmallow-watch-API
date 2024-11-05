@@ -26,22 +26,12 @@ export class DiscoverMoviesAndShowsUseCase {
     private tvShowsRepository: TvShowsRepository
   ) {}
 
-  async execute({
-    page,
-    lang,
-    sortBy,
-  }: DiscoverMoviesAndShowsUseCaseRequest): Promise<DiscoverMoviesAndShowsUseCaseResponse> {
+  async execute(
+    props: DiscoverMoviesAndShowsUseCaseRequest
+  ): Promise<DiscoverMoviesAndShowsUseCaseResponse> {
     const [moviesRes, tvShowsRes] = await Promise.all([
-      this.moviesRepository.findManyByFilter({
-        lang,
-        sortBy,
-        page,
-      }),
-      this.tvShowsRepository.findManyByFilter({
-        lang,
-        sortBy,
-        page,
-      }),
+      this.moviesRepository.findManyByFilter(props),
+      this.tvShowsRepository.findManyByFilter(props),
     ])
 
     const medias: Media[] = new Array().concat(moviesRes).concat(tvShowsRes)
