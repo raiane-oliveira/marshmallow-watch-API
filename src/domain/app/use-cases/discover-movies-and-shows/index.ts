@@ -1,17 +1,11 @@
 import { right, type Either } from "@/core/errors/either"
-import type {
-  MovieParamsFilters,
-  MoviesRepository,
-} from "../../repositories/movies-repository"
-import type {
-  TvShowParamsFilters,
-  TvShowsRepository,
-} from "../../repositories/tv-shows-repository"
 import type { Media } from "../../entities/media"
+import type {
+  MediasRepository,
+  MediasTrendingParams,
+} from "../../repositories/medias-repository"
 
-interface DiscoverMoviesAndShowsUseCaseRequest
-  extends MovieParamsFilters,
-    TvShowParamsFilters {}
+interface DiscoverMoviesAndShowsUseCaseRequest extends MediasTrendingParams {}
 
 type DiscoverMoviesAndShowsUseCaseResponse = Either<
   null,
@@ -21,21 +15,12 @@ type DiscoverMoviesAndShowsUseCaseResponse = Either<
 >
 
 export class DiscoverMoviesAndShowsUseCase {
-  constructor(
-    private moviesRepository: MoviesRepository,
-    private tvShowsRepository: TvShowsRepository
-  ) {}
+  constructor(private mediasRepository: MediasRepository) {}
 
   async execute(
     props: DiscoverMoviesAndShowsUseCaseRequest
   ): Promise<DiscoverMoviesAndShowsUseCaseResponse> {
-    const [moviesRes, tvShowsRes] = await Promise.all([
-      this.moviesRepository.findManyByFilter(props),
-      this.tvShowsRepository.findManyByFilter(props),
-    ])
-
-    const medias: Media[] = new Array().concat(moviesRes).concat(tvShowsRes)
-    medias.sort((a, b) => b.popularity - a.popularity)
+    const medias = await this.mediasRepository.findManyByTrending(props)
 
     return right({
       medias,

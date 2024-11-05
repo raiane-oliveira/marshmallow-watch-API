@@ -1,29 +1,26 @@
 import { makeMovie } from "@/test/factories/make-movie"
-import { InMemoryMoviesRepository } from "@/test/repositories/in-memory-movies-repository"
 import { DiscoverMoviesAndShowsUseCase } from "."
-import { InMemoryTvShowsRepository } from "@/test/repositories/in-memory-tv-shows-repository"
 import { makeTvShow } from "@/test/factories/make-tv-show"
+import { InMemoryMediasRepository } from "@/test/repositories/in-memory-medias-repository"
 
-let tvShowsRepository: InMemoryTvShowsRepository
-let moviesRepository: InMemoryMoviesRepository
+let mediasRepository: InMemoryMediasRepository
 let sut: DiscoverMoviesAndShowsUseCase
 
 describe("Discover Movies and Tv Shows Use Case", () => {
   beforeEach(() => {
-    moviesRepository = new InMemoryMoviesRepository()
-    tvShowsRepository = new InMemoryTvShowsRepository()
-    sut = new DiscoverMoviesAndShowsUseCase(moviesRepository, tvShowsRepository)
+    mediasRepository = new InMemoryMediasRepository()
+    sut = new DiscoverMoviesAndShowsUseCase(mediasRepository)
   })
 
   it("should be able to return movies and tv shows by its release", async () => {
     const movie = makeMovie()
-    moviesRepository.items.push(movie)
+    mediasRepository.items.push(movie)
 
     const tvShow = makeTvShow()
-    tvShowsRepository.items.push(tvShow)
+    mediasRepository.items.push(tvShow)
 
     const result = await sut.execute({
-      page: 1,
+      timeWindow: "week",
     })
 
     expect(result.isRight()).toBeTruthy()

@@ -7,37 +7,26 @@ import { TvShowPresenter } from "@/infra/http/presenters/tv-show-presenter"
 import type { FastifyReply, FastifyRequest } from "fastify"
 import { z } from "zod"
 
-// [GET] /discover/movies-and-shows?lang=&sortBy=&page=
+// [GET] /discover/movies-and-shows?lang=&sortBy=
 export async function discoverMoviesAndShowsController(
   req: FastifyRequest,
   reply: FastifyReply
 ) {
   const discoverMoviesAndShowsQuerySchema = z.object({
-    page: z.coerce.number().optional().default(1),
-    sortBy: z.string().optional(),
     lang: z.string().optional().default("en"),
-    release_date_gte: z.string().optional(),
-    release_date_lte: z.string().optional(),
+    time_window: z.string().optional().default("week"),
   })
 
-  const {
-    page,
-    lang,
-    sortBy,
-    release_date_lte: releaseDateLte,
-    release_date_gte: releaseDateGte,
-  } = discoverMoviesAndShowsQuerySchema.parse(req.query)
+  const { lang, time_window: timeWindow } =
+    discoverMoviesAndShowsQuerySchema.parse(req.query)
 
   const dict = getLanguage(lang)
 
   const discoverMoviesAndShowsUseCase = makeDiscoverMoviesAndShowsUseCase()
 
   const result = await discoverMoviesAndShowsUseCase.execute({
-    page,
     lang,
-    sortBy,
-    releaseDateGte,
-    releaseDateLte,
+    timeWindow,
   })
 
   if (result.isLeft()) {

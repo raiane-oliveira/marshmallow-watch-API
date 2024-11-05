@@ -1,14 +1,9 @@
-import { TmdbMoviesRepository } from "../third-apis/repositories/tmdb-movies-repository"
-import { TmdbTvShowsRepository } from "../third-apis/repositories/tmdb-tv-shows-repository"
+import { TmdbMediasRepository } from "../third-apis/repositories/tmdb-medias-repository"
 import { DiscoverMoviesAndShowsUseCase } from "@/domain/app/use-cases/discover-movies-and-shows"
 
 export function makeDiscoverMoviesAndShowsUseCase() {
-  const moviesRepository = new TmdbMoviesRepository()
-  const tvShowsRepository = new TmdbTvShowsRepository()
-  const useCase = new DiscoverMoviesAndShowsUseCase(
-    moviesRepository,
-    tvShowsRepository
-  )
+  const mediasRepository = new TmdbMediasRepository()
+  const useCase = new DiscoverMoviesAndShowsUseCase(mediasRepository)
 
   return useCase
 }
