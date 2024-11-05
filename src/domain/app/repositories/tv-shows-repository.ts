@@ -16,6 +16,10 @@ export interface TvShowParamsFilters extends PaginationParams {
   firstAirDateLte?: string
 }
 
+export interface TvShowParamsTopRated extends PaginationParams {
+  lang?: Locale | string
+}
+
 export interface TvShowSearchParams extends PaginationParams {
   query: string
   language?: "en-US" | string
@@ -23,6 +27,7 @@ export interface TvShowSearchParams extends PaginationParams {
 }
 
 export interface TvShowsRepository {
+  findManyByTopRated(params: TvShowParamsTopRated): Promise<TvShow[]>
   findManyByFilter(params: TvShowParamsFilters): Promise<TvShow[]>
   search(params: TvShowSearchParams): Promise<TvShow[]>
 }
