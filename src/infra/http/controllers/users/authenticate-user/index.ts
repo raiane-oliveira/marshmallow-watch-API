@@ -3,6 +3,7 @@ import { InvalidCredentialsError } from "@/domain/app/errors/invalid-credentials
 import { localeQuerySchema } from "@/i18n"
 import { getLanguage } from "@/i18n/get-language"
 import { makeAuthenticateUserUseCase } from "@/infra/factories/make-authenticate-user-use-case"
+import { UserProfilePresenter } from "@/infra/http/presenters/user-profile-presenter"
 import type { FastifyReply, FastifyRequest } from "fastify"
 import { z } from "zod"
 
@@ -81,5 +82,6 @@ export async function authenticateUserController(
     .status(200)
     .send({
       token,
+      user: UserProfilePresenter.toHTTP(user),
     })
 }
