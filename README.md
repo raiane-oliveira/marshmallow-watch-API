@@ -1,7 +1,8 @@
 <h1 align="center">
   <a  href="https://github.com/raiane-oliveira/marshmallow-watch">
 			<!-- LOGO DA APLICAÇÃO -->
-     <!-- <img src="https://github.com/raiane-oliveira/find-a-friend-API/assets/100815627/d898fd25-a4f2-4109-be95-81a243d5ed22" /> -->
+     <!-- <img src="https://github.![Uploading marshmallow-watch-logo.svg…]()
+com/raiane-oliveira/find-a-friend-API/assets/100815627/d898fd25-a4f2-4109-be95-81a243d5ed22" /> -->
   </a>
 </h1>
 
@@ -18,7 +19,7 @@
 <p align="center">
  <a href="#-about">About</a> •
  <a href="#-run-locally">Run Locally</a> •
- <a href="#-features">Features</a> •
+<!--  <a href="#-features">Features</a> • -->
  <a href="#-tech-stack">Tech Stack</a> •
  <a href="#-learnings">Learnings</a> •
  <a href="#-feedbacks">Feedbacks</a>
@@ -26,13 +27,12 @@
 
 ## 💻 About
 
-[DESRIÇÃO] Ex:
-A RESTful API for pet adoption, built with SOLID principles and tests.
-This challenge was offered in Rocketseat's Ignite course.
+Explore exclusive trailers, create personalized lists, and more with Marshmallow Watch. Transform your entertainment discovery experience today!
+RESTful API built with SOLID, Clean Architecture, and DDD basic concepts to manage your watched movies and shows.
 
 <!-- ER DO BANCO DE DADOS -->
 <div align="center">
-  <img src="https://github.com/raiane-oliveira/find-a-friend-API/assets/100815627/6343fbff-818a-463d-8934-440b9d251a37" />
+  <img src="https://github.com/user-attachments/assets/a0066d1d-094b-4874-92de-e7759043b5a2" />
 
 *The ER diagram of the database*
 </div>
