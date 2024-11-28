@@ -21,11 +21,13 @@ export class DiscoverTvShowsUseCase {
     page,
     sortBy,
     lang,
+    ...params
   }: DiscoverTvShowsUseCaseRequest): Promise<DiscoverTvShowsUseCaseResponse> {
     const tvShows = await this.tvShowsRepository.findManyByFilter({
       page,
       sortBy,
       lang,
+      ...params,
     })
 
     return right({

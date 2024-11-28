@@ -15,6 +15,16 @@ export async function discoverMoviesController(
     lang: z.string().optional().default("en"),
     release_date_gte: z.string().optional(),
     release_date_lte: z.string().optional(),
+    genreIds: z
+      .string()
+      .regex(/(^\w+$)|(.*,.*)|(.*\-.+)?/g)
+      .optional()
+      .default(" ")
+      .transform(value => {
+        if (!value) return undefined
+
+        return value.split(",")
+      }),
   })
 
   const {
@@ -23,6 +33,7 @@ export async function discoverMoviesController(
     sortBy,
     release_date_gte: releaseDateGte,
     release_date_lte: releaseDateLte,
+    genreIds,
   } = discoverMoviesQuerySchema.parse(req.query)
 
   const discoverMoviesUseCase = makeDiscoverMoviesUseCase()
@@ -33,6 +44,7 @@ export async function discoverMoviesController(
     lang,
     releaseDateLte,
     releaseDateGte,
+    genreIds,
   })
 
   if (result.isLeft()) {

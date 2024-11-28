@@ -29,9 +29,12 @@ export class TmdbMoviesRepository
     lang,
     releaseDateGte,
     releaseDateLte,
+    genreIds,
   }: MovieParamsFilters) {
+    const genres = genreIds ? genreIds.join(",") : null
+
     const response = await this.api(
-      `/discover/movie?page=${page}&primary_release_date.gte=${releaseDateGte}&primary_release_date.lte=${releaseDateLte}&sort_by=${sortBy}&language=${lang ?? "en-US"}&include_adult=false`
+      `/discover/movie?page=${page}&primary_release_date.gte=${releaseDateGte}&primary_release_date.lte=${releaseDateLte}&sort_by=${sortBy}&language=${lang ?? "en-US"}&include_adult=false${genres && `&with_genres=${genres}`}`
     )
     const tmdbMovies = await response.json()
 

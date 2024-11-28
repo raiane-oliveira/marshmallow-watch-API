@@ -12,12 +12,23 @@ export async function discoverTvShowsControler(
   const discoverTvShowsQuerySchema = z.object({
     page: z.coerce.number().optional().default(1),
     sortBy: z.string().optional(),
+    lang: z.string().optional().default("en"),
+    genreIds: z
+      .string()
+      .regex(/(^\w+$)|(.*,.*)|(.*\-.+)?/g)
+      .optional()
+      .default("")
+      .transform(value => {
+        if (!value) return undefined
+
+        return value.split(",")
+      }),
   })
 
-  const { page } = discoverTvShowsQuerySchema.parse(req.query)
+  const { page, genreIds, lang } = discoverTvShowsQuerySchema.parse(req.query)
 
   const useCase = makeDiscoverTvShowsUseCase()
-  const result = await useCase.execute({ page })
+  const result = await useCase.execute({ page, genreIds, lang })
 
   if (result.isLeft()) {
     return reply.status(400).send({

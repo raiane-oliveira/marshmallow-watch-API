@@ -7,7 +7,6 @@ import type {
 import type { TmdbTvShow } from "../interfaces/tmdb-tv-show"
 import { TmdbTvShowsMapper } from "../mappers/tmdb-tv-shows-mapper"
 import { TmdbApiProvider } from "../tmdb-api-provider"
-import type { TvShow } from "@/domain/app/entities/tv-show"
 
 export class TmdbTvShowsRepository
   extends TmdbApiProvider
@@ -17,9 +16,12 @@ export class TmdbTvShowsRepository
     page,
     sortBy = "popularity.desc",
     lang,
+    genreIds,
   }: TvShowParamsFilters) {
+    const genres = genreIds ? genreIds.join(",") : null
+
     const response = await this.api(
-      `/discover/tv?page=${page}&sort_by=${sortBy}&language=${lang ?? "en-US"}`
+      `/discover/tv?page=${page}&sort_by=${sortBy}&language=${lang ?? "en-US"}${genres && `&with_genres=${genres}`}`
     )
     const tmdbTvShows = await response.json()
 

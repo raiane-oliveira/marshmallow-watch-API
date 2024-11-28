@@ -14,6 +14,7 @@ export interface MovieParamsFilters extends PaginationParams {
     | string
   releaseDateGte?: string
   releaseDateLte?: string
+  genreIds?: string[]
 }
 
 export interface MovieSearchParams extends PaginationParams {

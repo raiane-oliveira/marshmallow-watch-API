@@ -14,6 +14,7 @@ export interface TvShowParamsFilters extends PaginationParams {
     | string
   firstAirDateGte?: string
   firstAirDateLte?: string
+  genreIds?: string[]
 }
 
 export interface TvShowParamsTopRated extends PaginationParams {
