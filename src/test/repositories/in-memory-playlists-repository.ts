@@ -1,5 +1,8 @@
 import type { Playlist } from "@/domain/app/entities/playlist"
-import type { PlaylistsRepository } from "@/domain/app/repositories/playlists-repository"
+import type {
+  FindManyPlaylistsParams,
+  PlaylistsRepository,
+} from "@/domain/app/repositories/playlists-repository"
 
 export class InMemoryPlaylistsRepository implements PlaylistsRepository {
   public items: Playlist[] = []
@@ -30,5 +33,26 @@ export class InMemoryPlaylistsRepository implements PlaylistsRepository {
     }
 
     return playlist
+  }
+
+  async findManyByUserId(
+    userId: string,
+    params: FindManyPlaylistsParams
+  ): Promise<Playlist[]> {
+    const allPlaylists = this.items.filter(item => {
+      const isPlaylistInsideFilterVisibility =
+        params.with[0] === "all" ? true : params.with.includes(item.visibility)
+
+      return (
+        item.userId.toString() === userId && isPlaylistInsideFilterVisibility
+      )
+    })
+
+    const playlists = allPlaylists.slice(
+      (params.page - 1) * 20,
+      params.page * 20
+    )
+
+    return playlists
   }
 }

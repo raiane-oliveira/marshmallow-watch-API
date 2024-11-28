@@ -1,9 +1,13 @@
 import type { Playlist } from "@/domain/app/entities/playlist"
-import type { PlaylistsRepository } from "@/domain/app/repositories/playlists-repository"
-import { eq, sql } from "drizzle-orm"
+import type {
+  FindManyPlaylistsParams,
+  PlaylistsRepository,
+} from "@/domain/app/repositories/playlists-repository"
+import { and, eq, inArray, sql } from "drizzle-orm"
 import { db } from ".."
 import { DbPlaylistsMapper } from "../mappers/db-playlists-mapper"
 import { playlists, tmdbMediasInPlaylists } from "../schema"
+import { DbPlaylistWithMediasMapper } from "../mappers/db-playlist-with-medias-mapper"
 
 export class DbPlaylistsRepository implements PlaylistsRepository {
   async create(playlist: Playlist): Promise<Playlist> {
@@ -50,6 +54,47 @@ export class DbPlaylistsRepository implements PlaylistsRepository {
       return null
     }
 
-    return DbPlaylistsMapper.toDomain(playlistWithMedias[0])
+    return DbPlaylistWithMediasMapper.toDomain(playlistWithMedias[0])
+  }
+
+  async findManyByUserId(
+    userId: string,
+    { page, with: withVisibility }: FindManyPlaylistsParams
+  ) {
+    const filterPlaylists =
+      withVisibility[0] === "all"
+        ? eq(playlists.userId, userId)
+        : and(
+            eq(playlists.userId, userId),
+            inArray(
+              playlists.visibility,
+              withVisibility.filter(item => item !== "all")
+            )
+          )
+
+    const userPlaylists = await db
+      .select({
+        id: playlists.id,
+        name: playlists.name,
+        visibility: playlists.visibility,
+        mediaIds: sql<string[]>`
+          JSON_AGG(${tmdbMediasInPlaylists.tmdbMediaId})
+        `,
+        color: playlists.color,
+        userId: playlists.userId,
+        createdAt: playlists.createdAt,
+        updatedAt: playlists.updatedAt,
+      })
+      .from(playlists)
+      .leftJoin(
+        tmdbMediasInPlaylists,
+        eq(playlists.id, tmdbMediasInPlaylists.playlistId)
+      )
+      .groupBy(playlists.id)
+      .having(filterPlaylists)
+      .offset((page - 1) * 20)
+      .limit(page * 20)
+
+    return userPlaylists.map(DbPlaylistWithMediasMapper.toDomain)
   }
 }

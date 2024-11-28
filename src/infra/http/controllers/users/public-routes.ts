@@ -6,6 +6,7 @@ import { getPublicUserProfileController } from "./get-public-user-profile"
 import { refreshTokenController } from "./refresh-token"
 import { registerUserController } from "./register-user"
 import { logoutUserController } from "./logout-user"
+import { getCurrentUserPlaylistsController } from "./get-current-user-playlists"
 
 export async function userPublicRoutes(app: FastifyInstance) {
   app.register(publicRoutePlugin)
@@ -18,4 +19,6 @@ export async function userPublicRoutes(app: FastifyInstance) {
 
   app.get("/users", fetchUsersController)
   app.get("/users/:username", getPublicUserProfileController)
+
+  app.get("/users/:username/playlists", getCurrentUserPlaylistsController)
 }
