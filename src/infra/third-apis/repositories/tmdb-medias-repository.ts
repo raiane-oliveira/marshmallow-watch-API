@@ -18,7 +18,7 @@ export class TmdbMediasRepository
     timeWindow = "week",
   }: MediasTrendingParams): Promise<Media[]> {
     const res = await this.api(
-      `/3/trending/all/${timeWindow}?language=${lang ?? "en-US"}`
+      `/trending/all/${timeWindow}?language=${lang ?? "en-US"}`
     )
 
     const tmdbMedias = await res.json()

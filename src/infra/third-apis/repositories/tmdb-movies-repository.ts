@@ -14,7 +14,7 @@ export class TmdbMoviesRepository
 {
   async findManyByUpcoming({ page, lang }: MovieUpcomingParams) {
     const response = await this.api(
-      `/3/movie/upcoming?page=${page}&language=${lang ?? "en-US"}`
+      `/movie/upcoming?page=${page}&language=${lang ?? "en-US"}`
     )
     const tmdbMovies = await response.json()
 
@@ -31,7 +31,7 @@ export class TmdbMoviesRepository
     releaseDateLte,
   }: MovieParamsFilters) {
     const response = await this.api(
-      `/3/discover/movie?page=${page}&primary_release_date.gte=${releaseDateGte}&primary_release_date.lte=${releaseDateLte}&sort_by=${sortBy}&language=${lang ?? "en-US"}&include_adult=false`
+      `/discover/movie?page=${page}&primary_release_date.gte=${releaseDateGte}&primary_release_date.lte=${releaseDateLte}&sort_by=${sortBy}&language=${lang ?? "en-US"}&include_adult=false`
     )
     const tmdbMovies = await response.json()
 
@@ -42,7 +42,7 @@ export class TmdbMoviesRepository
 
   async search({ query, year, page, language }: MovieSearchParams) {
     const response = await this.api(
-      `/3/search/movie?query=${query}&page=${page}&language=${language}&primary_release_year=${year}`
+      `/search/movie?query=${query}&page=${page}&language=${language}&primary_release_year=${year}`
     )
     const tmdbMovies = await response.json()
 

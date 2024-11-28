@@ -19,7 +19,7 @@ export class TmdbTvShowsRepository
     lang,
   }: TvShowParamsFilters) {
     const response = await this.api(
-      `/3/discover/tv?page=${page}&sort_by=${sortBy}&language=${lang ?? "en-US"}`
+      `/discover/tv?page=${page}&sort_by=${sortBy}&language=${lang ?? "en-US"}`
     )
     const tmdbTvShows = await response.json()
 
@@ -30,7 +30,7 @@ export class TmdbTvShowsRepository
 
   async findManyByTopRated({ page, lang }: TvShowParamsTopRated) {
     const res = await this.api(
-      `/3/tv/top_rated?page=${page}&language=${lang ?? "en-US"}`
+      `/tv/top_rated?page=${page}&language=${lang ?? "en-US"}`
     )
     const tmdbTvShows = await res.json()
 
@@ -46,7 +46,7 @@ export class TmdbTvShowsRepository
     language,
   }: TvShowSearchParams) {
     const response = await this.api(
-      `/3/search/tv?query=${query}&page=${page}&language=${language}&first_air_date_year=${firstAirDateYear}`
+      `/search/tv?query=${query}&page=${page}&language=${language}&first_air_date_year=${firstAirDateYear}`
     )
 
     const tmdbTvShows = await response.json()
