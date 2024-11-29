@@ -1,8 +1,10 @@
 import type { PaginationParams } from "@/core/pagination-params"
-import type { Playlist } from "@/domain/app/entities/playlist"
+import { Playlist } from "@/domain/app/entities/playlist"
 import type { User } from "@/domain/app/entities/user"
 import type { UsersRepository } from "@/domain/app/repositories/users-repository"
 import type { InMemoryPlaylistsRepository } from "./in-memory-playlists-repository"
+import type { CreatePlaylistDTO } from "@/core/dtos/playlist"
+import { UniqueEntityId } from "@/core/entities/unique-entity-id"
 
 export class InMemoryUsersRepository implements UsersRepository {
   items: User[] = []
@@ -49,9 +51,17 @@ export class InMemoryUsersRepository implements UsersRepository {
     this.items.push(user)
   }
 
-  async createWithPlaylists(user: User, playlists: Playlist[]) {
+  async createWithPlaylists(user: User, playlists: CreatePlaylistDTO[]) {
     this.items.push(user)
-    this.playlistsRepository?.items.push(...playlists)
+    const playlistsEntity = playlists.map(playlist =>
+      Playlist.create({
+        ...playlist,
+        userId: new UniqueEntityId(playlist.userId),
+        mediasId: [],
+      })
+    )
+
+    this.playlistsRepository?.items.push(...playlistsEntity)
   }
 
   async update(user: User) {

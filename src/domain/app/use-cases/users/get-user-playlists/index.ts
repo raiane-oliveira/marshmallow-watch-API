@@ -1,6 +1,6 @@
+import type { PlaylistDTO } from "@/core/dtos/playlist"
 import { type Either, left, right } from "@/core/errors/either"
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error"
-import type { Playlist } from "@/domain/app/entities/playlist"
 import type {
   FindManyPlaylistsParams,
   PlaylistsRepository,
@@ -14,7 +14,7 @@ interface GetUserPlaylistsRequest extends FindManyPlaylistsParams {
 type GetUserPlaylistsResponse = Either<
   ResourceNotFoundError,
   {
-    playlists: Playlist[]
+    playlists: PlaylistDTO[]
   }
 >
 

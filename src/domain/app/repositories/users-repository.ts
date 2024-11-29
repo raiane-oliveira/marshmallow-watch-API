@@ -1,6 +1,6 @@
 import type { PaginationParams } from "@/core/pagination-params"
-import type { Playlist } from "../entities/playlist"
 import type { User } from "../entities/user"
+import type { CreatePlaylistDTO } from "@/core/dtos/playlist"
 
 export interface UsersRepository {
   findMany(params: PaginationParams): Promise<User[]>
@@ -8,6 +8,6 @@ export interface UsersRepository {
   findById(id: string): Promise<User | null>
   findByUsername(username: string): Promise<User | null>
   create(user: User): Promise<void>
-  createWithPlaylists(user: User, playlists: Playlist[]): Promise<void>
+  createWithPlaylists(user: User, playlists: CreatePlaylistDTO[]): Promise<void>
   update(user: User): Promise<void>
 }

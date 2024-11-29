@@ -1,6 +1,7 @@
 import { createId } from "@paralleldrive/cuid2"
 import { relations } from "drizzle-orm"
 import {
+  boolean,
   date,
   integer,
   pgEnum,
@@ -50,6 +51,7 @@ export const playlists = pgTable("playlists", {
     .$defaultFn(() => createId()),
   name: text("name").notNull(),
   visibility: visibilityEnum("visibility").notNull().default("public"),
+  isDefault: boolean("is_default").notNull().default(false),
   color: text("color").notNull(),
   userId: text("user_id")
     .references(() => users.id, {
@@ -57,7 +59,7 @@ export const playlists = pgTable("playlists", {
     })
     .notNull(),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull(),
-  updatedAt: date("updated_at"),
+  updatedAt: date("updated_at", { mode: "date" }),
 })
 
 export const tmdbMediasInPlaylists = pgTable("tmdb_medias_in_playlists", {

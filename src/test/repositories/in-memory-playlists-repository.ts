@@ -1,3 +1,4 @@
+import type { PlaylistDTO } from "@/core/dtos/playlist"
 import type { Playlist } from "@/domain/app/entities/playlist"
 import type {
   FindManyPlaylistsParams,
@@ -38,7 +39,7 @@ export class InMemoryPlaylistsRepository implements PlaylistsRepository {
   async findManyByUserId(
     userId: string,
     params: FindManyPlaylistsParams
-  ): Promise<Playlist[]> {
+  ): Promise<PlaylistDTO[]> {
     const allPlaylists = this.items.filter(item => {
       const isPlaylistInsideFilterVisibility =
         params.with[0] === "all" ? true : params.with.includes(item.visibility)
@@ -53,6 +54,15 @@ export class InMemoryPlaylistsRepository implements PlaylistsRepository {
       params.page * 20
     )
 
-    return playlists
+    return playlists.map(playlist => ({
+      id: playlist.id.toString(),
+      name: playlist.name,
+      color: playlist.name,
+      mediasId: playlist.mediasId,
+      visibility: playlist.visibility,
+      isDefault: false,
+      createdAt: playlist.createdAt,
+      updatedAt: playlist.updatedAt,
+    }))
   }
 }

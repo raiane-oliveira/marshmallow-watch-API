@@ -11,7 +11,7 @@ export class DbPlaylistsMapper {
       userId: raw.userId.toString(),
       color: raw.color,
       createdAt: raw.createdAt,
-      updatedAt: raw.updatedAt?.toString(),
+      updatedAt: raw.updatedAt,
     }
   }
 

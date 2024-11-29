@@ -1,7 +1,7 @@
+import type { CreatePlaylistDTO } from "@/core/dtos/playlist"
 import { type Either, left, right } from "@/core/errors/either"
 import { InvalidUsernameError } from "@/core/errors/invalid-username-error"
 import type { HashGenerator } from "@/domain/app/cryptography/hash-generator"
-import { Playlist } from "@/domain/app/entities/playlist"
 import { User } from "@/domain/app/entities/user"
 import { Username } from "@/domain/app/entities/value-objects/username"
 import { UserAlreadyExistsError } from "@/domain/app/errors/user-already-exists-error"
@@ -18,7 +18,6 @@ type CreateUserUseCaseResponse = Either<
   UserAlreadyExistsError | InvalidUsernameError,
   {
     user: User
-    playlists: Playlist[]
   }
 >
 
@@ -53,27 +52,27 @@ export class CreateUserUseCase {
       password: passwordHashed,
     })
 
-    const willWatchPlaylist = Playlist.create({
+    const willWatchPlaylist: CreatePlaylistDTO = {
       name: "willWatch",
-      userId: user.id,
+      userId: user.id.toString(),
+      isDefault: true,
       color: "#BAE1FF",
-      mediasId: [],
       visibility: "private",
-    })
-    const watchedPlaylist = Playlist.create({
+    }
+    const watchedPlaylist: CreatePlaylistDTO = {
       name: "watched",
-      userId: user.id,
+      userId: user.id.toString(),
+      isDefault: true,
       color: "#FFB3BA",
-      mediasId: [],
       visibility: "private",
-    })
-    const watchingPlaylist = Playlist.create({
+    }
+    const watchingPlaylist: CreatePlaylistDTO = {
       name: "watching",
-      userId: user.id,
+      userId: user.id.toString(),
+      isDefault: true,
       color: "#FFFFBA",
-      mediasId: [],
       visibility: "private",
-    })
+    }
 
     await this.usersRepository.createWithPlaylists(user, [
       willWatchPlaylist,
@@ -83,7 +82,6 @@ export class CreateUserUseCase {
 
     return right({
       user,
-      playlists: [willWatchPlaylist, watchedPlaylist, watchingPlaylist],
     })
   }
 }

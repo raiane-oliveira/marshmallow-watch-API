@@ -34,9 +34,10 @@ export class DbPlaylistsRepository implements PlaylistsRepository {
         id: playlists.id,
         name: playlists.name,
         visibility: playlists.visibility,
-        mediaIds: sql<string[]>`
+        mediasId: sql<string[]>`
           JSON_AGG(${tmdbMediasInPlaylists.tmdbMediaId})
         `,
+        isDefault: playlists.isDefault,
         color: playlists.color,
         userId: playlists.userId,
         createdAt: playlists.createdAt,
@@ -77,9 +78,10 @@ export class DbPlaylistsRepository implements PlaylistsRepository {
         id: playlists.id,
         name: playlists.name,
         visibility: playlists.visibility,
-        mediaIds: sql<string[]>`
+        mediasId: sql<string[]>`
           JSON_AGG(${tmdbMediasInPlaylists.tmdbMediaId})
         `,
+        isDefault: playlists.isDefault,
         color: playlists.color,
         userId: playlists.userId,
         createdAt: playlists.createdAt,
@@ -95,6 +97,7 @@ export class DbPlaylistsRepository implements PlaylistsRepository {
       .offset((page - 1) * 20)
       .limit(page * 20)
 
-    return userPlaylists.map(DbPlaylistWithMediasMapper.toDomain)
+    return userPlaylists
+    // return userPlaylists.map(DbPlaylistWithMediasMapper.toDTO)
   }
 }
