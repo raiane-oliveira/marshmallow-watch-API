@@ -86,10 +86,12 @@ describe("Get User Playlists Use Case", () => {
 
     if (resultPrivatePlaylists.isRight()) {
       expect(resultPrivatePlaylists.value.playlists).toHaveLength(1)
+      expect(resultPrivatePlaylists.value.defaultPlaylists).toHaveLength(1)
     }
 
     if (resultPublicPlaylists.isRight()) {
       expect(resultPublicPlaylists.value.playlists).toHaveLength(2)
+      expect(resultPublicPlaylists.value.defaultPlaylists).toHaveLength(2)
     }
   })
 })

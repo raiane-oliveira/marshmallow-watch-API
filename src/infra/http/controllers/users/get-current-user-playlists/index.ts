@@ -1,5 +1,4 @@
 import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error"
-import type { Visibility } from "@/core/types/utils"
 import { localeQuerySchema } from "@/i18n"
 import { getLanguage } from "@/i18n/get-language"
 import { makeGetUserPlaylistsUseCase } from "@/infra/factories/make-get-user-playlists-use-case"
@@ -31,11 +30,22 @@ export async function getCurrentUserPlaylistsController(
     .object({ username: z.string({ required_error: dict.inputs.required }) })
     .parse(req.params)
 
+  let isValidToken = false
+  try {
+    await req.jwtVerify()
+    isValidToken = true
+  } catch (err) {
+    isValidToken = false
+  }
+
   const useCase = makeGetUserPlaylistsUseCase()
   const result = await useCase.execute({
     username,
     page,
-    with: "user" in req ? (filter as ("all" | Visibility)[]) : ["public"],
+    with:
+      isValidToken && req.user !== null && req.user.username === username
+        ? filter
+        : ["public"],
   })
 
   if (result.isLeft()) {
@@ -55,9 +65,10 @@ export async function getCurrentUserPlaylistsController(
     }
   }
 
-  const { playlists } = result.value
+  const { playlists, defaultPlaylists } = result.value
 
   return reply.status(200).send({
     playlists: playlists.map(PlaylistPresenter.toHTTP),
+    defaultPlaylists: defaultPlaylists.map(PlaylistPresenter.toHTTP),
   })
 }

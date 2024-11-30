@@ -62,42 +62,59 @@ export class DbPlaylistsRepository implements PlaylistsRepository {
     userId: string,
     { page, with: withVisibility }: FindManyPlaylistsParams
   ) {
-    const filterPlaylists =
-      withVisibility[0] === "all"
-        ? eq(playlists.userId, userId)
-        : and(
-            eq(playlists.userId, userId),
-            inArray(
-              playlists.visibility,
-              withVisibility.filter(item => item !== "all")
-            )
-          )
+    const filterPlaylists = and(
+      eq(playlists.userId, userId),
+      inArray(playlists.visibility, withVisibility),
+      eq(playlists.isDefault, false)
+    )
+    const filterDefaultPlaylists = and(
+      eq(playlists.userId, userId),
+      inArray(playlists.visibility, withVisibility),
+      eq(playlists.isDefault, true)
+    )
 
-    const userPlaylists = await db
-      .select({
-        id: playlists.id,
-        name: playlists.name,
-        visibility: playlists.visibility,
-        mediasId: sql<string[]>`
+    const selectFromPlaylist = {
+      id: playlists.id,
+      name: playlists.name,
+      visibility: playlists.visibility,
+      mediasId: sql<string[]>`
           JSON_AGG(${tmdbMediasInPlaylists.tmdbMediaId})
         `,
-        isDefault: playlists.isDefault,
-        color: playlists.color,
-        userId: playlists.userId,
-        createdAt: playlists.createdAt,
-        updatedAt: playlists.updatedAt,
-      })
-      .from(playlists)
-      .leftJoin(
-        tmdbMediasInPlaylists,
-        eq(playlists.id, tmdbMediasInPlaylists.playlistId)
-      )
-      .groupBy(playlists.id)
-      .having(filterPlaylists)
-      .offset((page - 1) * 20)
-      .limit(page * 20)
+      isDefault: playlists.isDefault,
+      color: playlists.color,
+      userId: playlists.userId,
+      createdAt: playlists.createdAt,
+      updatedAt: playlists.updatedAt,
+    }
 
-    return userPlaylists
-    // return userPlaylists.map(DbPlaylistWithMediasMapper.toDTO)
+    const [userPlaylists, defaultPlaylists] = await Promise.all([
+      db
+        .select(selectFromPlaylist)
+        .from(playlists)
+        .leftJoin(
+          tmdbMediasInPlaylists,
+          eq(playlists.id, tmdbMediasInPlaylists.playlistId)
+        )
+        .groupBy(playlists.id)
+        .having(filterPlaylists)
+        .offset((page - 1) * 20)
+        .limit(page * 20),
+      db
+        .select(selectFromPlaylist)
+        .from(playlists)
+        .leftJoin(
+          tmdbMediasInPlaylists,
+          eq(playlists.id, tmdbMediasInPlaylists.playlistId)
+        )
+        .groupBy(playlists.id)
+        .having(filterDefaultPlaylists)
+        .offset((page - 1) * 20)
+        .limit(page * 20),
+    ])
+
+    return {
+      playlists: userPlaylists,
+      defaultPlaylists,
+    }
   }
 }

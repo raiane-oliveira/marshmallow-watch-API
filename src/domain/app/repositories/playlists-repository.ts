@@ -4,7 +4,7 @@ import type { Visibility } from "@/core/types/utils"
 import type { PlaylistDTO } from "@/core/dtos/playlist"
 
 export interface FindManyPlaylistsParams extends PaginationParams {
-  with: (Visibility | "all")[]
+  with: Visibility[]
 }
 
 export interface PlaylistsRepository {
@@ -14,5 +14,8 @@ export interface PlaylistsRepository {
   findManyByUserId(
     userId: string,
     params: FindManyPlaylistsParams
-  ): Promise<PlaylistDTO[]>
+  ): Promise<{
+    playlists: PlaylistDTO[]
+    defaultPlaylists: PlaylistDTO[]
+  }>
 }
