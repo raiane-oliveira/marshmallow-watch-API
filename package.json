@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "tsx watch src/infra/server.ts",
     "build": "tsup src --out-dir build",
-    "start": "tsx build/server.cjs",
+    "start": "tsx build/server.js",
     "test": "vitest run --dir ./src/domain/",
     "test:watch": "vitest --dir ./src/domain/",
     "test:ui": "vitest --ui",
